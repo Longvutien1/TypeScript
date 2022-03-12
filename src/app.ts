@@ -24,3 +24,15 @@ const numberArr: number[] = [1,2,3];
 const stringArr: string[] = ['a','b','c'];
 const objectArr: object[] = [{id:1}, {name:"b"}]
 // sum()
+
+type Product = {
+    name: string,
+    price: number,
+    desc? :string
+}
+
+const products = <T extends Product>(products: T[]) => {
+    const result =  products.map(item => item.desc);
+}
+
+products([{name: "long", price:20}])
