@@ -11,5 +11,8 @@ const object = { id: 1, name: "Minh đức" };
 const numberArr = [1, 2, 3];
 const stringArr = ['a', 'b', 'c'];
 const objectArr = [{ id: 1 }, { name: "b" }];
-// sum()
+const products = (products) => {
+    const result = products.map(item => item.desc);
+};
+products([{ name: "long", price: 20 }]);
 //# sourceMappingURL=app.js.map
