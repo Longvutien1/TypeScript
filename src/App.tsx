@@ -1,10 +1,17 @@
 import { useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
-
 function App() {
   const [count, setCount] = useState(0)
-
+  const [myName, setMyName] = useState("Vũ Tiến Long");
+  const [status, setStatus] = useState(true);
+  const [info, setInfor] = useState({id:1, name:"Long chanh thôn"});
+  const [products, setProducts] = useState([
+    { id: 1, name: "Product A" },
+    { id: 2,  name: "Product B" },
+    { id: 3,name: "Product C" }
+  ]
+  )
   return (
     <div className="App">
       <header className="App-header">
