@@ -1,0 +1,29 @@
+.ant-layout header .logo {
+   float: left;
+   width: 120px;
+   height: 31px;
+   /* margin: 16px 24px 16px 0; */
+   /* background: url(../image/pic-3.png) no-repeat  center; */
+   font-size: 17px;
+ }
+ .ant-layout .logo {
+   /* float: right; */
+   /* margin: 16px 0 16px 24px; */
+ }
+ 
+ .site-layout-background {
+   background: #fff;
+ }
+
+ section{
+   padding: 0
+}
+.btnAdmin{
+  padding: 5px 15px;
+  background-color: #001529;
+  
+  margin: 10px 0;
+}
+.btnAdmin a{
+  color: #fff;
+}

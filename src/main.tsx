@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
-
-
+import 'antd/dist/antd.css'
 // const myName:string = "Vũ Tiến Long";
 // const age:number = 20;
 // const phone:string = "0392127565"

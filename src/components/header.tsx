@@ -17,7 +17,7 @@ const Header = (props: Props) => {
               <div className="icons">
                 <div id="search-btn" className="fas fa-search" />
                 <NavLink to="/#/cart" className="fas fa-shopping-cart"> </NavLink>
-                <NavLink to="/#/sign_in" className="fas fa-user" > </NavLink>  
+                <NavLink to="login" className="fas fa-user" > </NavLink>  
                 <NavLink to="" id="logout" className="text-xl"><i className="bx bx-log-out-circle bx-rotate-180" /></NavLink>
               </div>
             </div>
@@ -29,7 +29,7 @@ const Header = (props: Props) => {
                 <NavLink className="navLink" to="/#/">arrivals</NavLink>
                 <NavLink className="navLink" to="/#/">reviews</NavLink>
                 <NavLink className="navLink" to="/#/">blogs</NavLink>
-          
+                <NavLink className="navLink" to="/admin">Admin</NavLink>
               </nav>
             </div>
           </div>

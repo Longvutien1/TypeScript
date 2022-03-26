@@ -6,8 +6,8 @@ import { NavLink } from 'react-router-dom';
 import { remove } from '../api/products';
 import ShowInfo from '../components/ShowInfo';
 import { ProductType } from '../types/products';
-import Header from './header';
-import Footer from "./footer";
+import Header from '../components/header';
+import Footer from "../components/footer";
 
 type Props = {
   data: ProductType[]
@@ -143,7 +143,7 @@ const HomePage = (props: Props) => {
   
   },[])
   return (
-   <div>
+   <div className="homeLayout">
       <section className="home" id="home">
         <div className="row2">
           <div className="content">
