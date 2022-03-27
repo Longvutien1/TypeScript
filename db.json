@@ -55,5 +55,85 @@
       "price": "333",
       "id": 39
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "long vt",
+      "email": "long@gmail.com",
+      "password": "123123"
+    },
+    {
+      "email": "tllong20002@gmail.com",
+      "password": "$2a$10$jy/qVKUd0QfMhn8qc0.WoejAsUqJxJ7yBU/FcuH80s/MwD6Rl628q",
+      "username": "Vũ Tiến Long",
+      "id": 2
+    },
+    {
+      "email": "longvtph14046@fpt.edu.vn",
+      "password": "$2a$10$7Rb.m18AGIAMBYU3.tp/zuNzA6PtL0uJHa2DOGhPozgNQmOZ/pLka",
+      "username": "longvtph14046",
+      "id": 3
+    },
+    {
+      "email": "loanbnph17875@fpt.edu.vn",
+      "password": "$2a$10$8IPuxt9p7luBWgwUU0VsnOpnsci1McaPi5nVI9u47HXhS1XCH.C.i",
+      "username": "longvtph14046",
+      "id": 4
+    },
+    {
+      "email": "loanbnph178751@fpt.edu.vn",
+      "password": "$2a$10$TGmbryaimiXeHTZdssm8NuAZSPPu1EHfvSdzGXVS6hGB3MO5AQeBK",
+      "username": "longvtph1404612",
+      "id": 5
+    },
+    {
+      "email": "tllong20002@gmail.com.edu",
+      "password": "$2a$10$ylRDKw0rRQwWEZZc6KfHL.NjsxvPQ4pcZ140AD3P067e5fvfyVUxm",
+      "username": "Vũ Tiến Long1",
+      "id": 6
+    },
+    {
+      "email": "a12vvv@gmail.com",
+      "password": "$2a$10$f/zYDE0LUyyEBYcS9zoQreBro6uMHz1bOEFVotvhxYrwIzxIWYDMG",
+      "username": "longvt",
+      "id": 7
+    },
+    {
+      "email": "huunho@gmail.com",
+      "password": "$2a$10$XjNF0RTXtv05TPY/PAaQb.KVS3XEb15McrN2nZdHNUu3tGE5fXTCu",
+      "username": "longvtph14046",
+      "id": 8
+    },
+    {
+      "email": "a12vvv@gmail.com.vn",
+      "password": "$2a$10$pLVCQMd8oGSE1d8PmORYrOwwWNpG2yfTq2bVkPktbNjinqIHsH/7.",
+      "username": "longvt",
+      "id": 9
+    },
+    {
+      "email": "tllong1@gmail.com",
+      "password": "$2a$10$iTYe/zeBSHkCqDsAtSSVMOqJrH3VMe9svVhsO004u1lbDAmhesyZq",
+      "username": "longvt",
+      "id": 10
+    },
+    {
+      "email": "tllong20002@gmail.com.ga",
+      "password": "$2a$10$bzL0rg.d389mWEnKXLUV7ejkfn08dTObYdEh2jt6HB8Z0t4jeJ5Tu",
+      "username": "longvtph14046",
+      "id": 11
+    },
+    {
+      "email": "tllong20002@gmail.com.tt",
+      "password": "$2a$10$amWWM5AE9OVliO9EkuQK9e0iWu1dK3ufhmsL2GBYj0QEBnY3MYpcG",
+      "username": "Vũ Tiến Long",
+      "id": 15
+    },
+    {
+      "email": "tllong20002@gmail.com.q",
+      "password": "$2a$10$6EgHZu1xqJWOqSVB9GAybuRx5e4C9dEA.yznGFhYSLlTStpsTYZBC",
+      "username": "Vũ Tiến Long 402",
+      "id": 16
+    }
   ]
 }

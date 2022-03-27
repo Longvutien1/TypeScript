@@ -13,4 +13,4 @@ const PrivateRouter = (props: PrivateRouterProps) => {
   return props.children
 }
 
-export default PrivateRouter
+export default PrivateRouter;

@@ -11,11 +11,12 @@ import DetailProduct from './pages/DetailProduct';
 import { useEffect, useState } from 'react';
 import { ProductType } from './types/products';
 import { addProduct, list, remove, update } from './api/products';
-import Login from './pages/login';
+import Login from './pages/user/login';
 import ProductManager from './pages/products/ProductManager';
 import AddProduct from './pages/products/add';
 import EditProduct from './pages/products/edit';
-import PrivateRouter from './components/PrivateRouter';
+import PrivateRouter from './midlerware/PrivateRouter';
+import Register from './pages/user/Register';
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
 
@@ -56,10 +57,8 @@ function App() {
               <Route path="/product/:id" element={<DetailProduct />} /> 
             </Route>
       
-            <Route path="/login" element={<Login/>}>
-
-             
-            </Route>
+            <Route path="/login" element={<Login/>}></Route>
+            <Route path="/register" element={<Register/>}></Route>
 
             <Route path="admin" element={<PrivateRouter><AdminLayout/></PrivateRouter>}>
                 <Route index element={<Navigate to="productmanager"/>}/>

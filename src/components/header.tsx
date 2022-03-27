@@ -30,7 +30,12 @@ const Header = (props: Props) => {
                 <NavLink className="navLink" to="/#/">reviews</NavLink>
                 <NavLink className="navLink" to="/#/">blogs</NavLink>
                 <NavLink className="navLink" to="/admin">Admin</NavLink>
+               
+                <span>Hello {localStorage.getItem("user") ? `
+                  ${JSON.parse(String(localStorage.getItem("user"))).user.username}
+                `: ""}</span>
               </nav>
+            
             </div>
           </div>
           {/* header section ends */}

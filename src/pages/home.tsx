@@ -8,6 +8,7 @@ import ShowInfo from '../components/ShowInfo';
 import { ProductType } from '../types/products';
 import Header from '../components/header';
 import Footer from "../components/footer";
+import ListProduct from "../components/ListProduct";
 
 type Props = {
   data: ProductType[]
@@ -24,6 +25,34 @@ const HomePage = (props: Props) => {
   }
 
   useEffect(() => {
+         // eslint-disable-next-line no-unused-vars
+         const swiper2 = new Swiper(".featured-slider", {
+          spaceBetween: 10,
+          loop: true,
+          centeredSlides: true,
+          autoplay: {
+              delay: 9500,
+              disableOnInteraction: false,
+          },
+          navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+          },
+          breakpoints: {
+              0: {
+                  slidesPerView: 1,
+              },
+              450: {
+                  slidesPerView: 2,
+              },
+              768: {
+                  slidesPerView: 3,
+              },
+              1024: {
+                  slidesPerView: 4,
+              },
+          },
+      });
     const swiper = new Swiper(".books-slider", {
       loop: true,
 
@@ -47,34 +76,7 @@ const HomePage = (props: Props) => {
   });
   // Sswiper.onload();
 
-  // eslint-disable-next-line no-unused-vars
-  const swiper2 = new Swiper(".featured-slider", {
-      spaceBetween: 10,
-      loop: true,
-      centeredSlides: true,
-      autoplay: {
-          delay: 9500,
-          disableOnInteraction: false,
-      },
-      navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-      },
-      breakpoints: {
-          0: {
-              slidesPerView: 1,
-          },
-          450: {
-              slidesPerView: 2,
-          },
-          768: {
-              slidesPerView: 3,
-          },
-          1024: {
-              slidesPerView: 4,
-          },
-      },
-  });
+  
   // eslint-disable-next-line no-unused-vars
   const swiper3 = new Swiper(".arrivals-slider", {
       spaceBetween: 10,
@@ -195,58 +197,11 @@ const HomePage = (props: Props) => {
       </section>
       {/* icons section end  */}
       {/* featured section starts  */}
-      <section className="featured" id="featured">
-        <h1 className="heading"> <span>featured books</span></h1>
-        <div className="swiper featured-slider" style={{zIndex: 0}}>
-          <div className="swiper-wrapper products-container">
-            <div className="swiper-slide box">
-              <div className="icons">
-                <NavLink to="" className="fas fa-shopping-cart" > </NavLink>
-                <NavLink to="" className="fas fa-heart"> </NavLink>
-                <NavLink to="/detail_product/${item.id}" className="fas fa-eye" > </NavLink>
-              </div>    
-              <div className="image product" data-name="p-${item.id}">
-                <img src="../image/book-1.png" />
-              </div>
-              <div className="content">
-                <h3>Product name</h3>
-                <div className="price">$80.00 <span>$99.00</span></div>
-                <a data-id="${item.id}" className="btn" id="btnAddToCart">add to cart</a>
-              </div>
-            </div>
-            {/* end product 1 */}
+      
+        <ListProduct/>
 
-            <div className="swiper-slide box ">
-              <div className="icons">
-                <NavLink to="" className="fas fa-shopping-cart" > </NavLink>
-                <NavLink to="" className="fas fa-heart"> </NavLink>
-                <NavLink to="/detail_product/${item.id}" className="fas fa-eye" > </NavLink>
-              </div>    
-              <div className="image product" data-name="p-${item.id}">
-                <img src="../image/book-2.png" />
-              </div>
-              <div className="content">
-                <h3>Product name</h3>
-                <div className="price">$80.00 <span>$99.00</span></div>
-                <a data-id="${item.id}" className="btn" id="btnAddToCart">add to cart</a>
-              </div>
-            </div>
-
-             {/* end product 1 */}
-
-          
-          </div>
-          
-          
-          <div className="swiper-button-next" />
-          <div className="swiper-button-prev" />
-        </div>
-
-        <div className="products-preview">
-          {/* ${'{'}await ListProduct.render2(){'}'} */}
-        </div>
-      </section>
       {/* featured section ends */}
+
       {/* newsletter section starts --*/}
       <section className="newsletter">
         <form >

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ProductType } from '../../types/products'
 import { useForm, SubmitHandler} from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
