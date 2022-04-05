@@ -3,8 +3,8 @@ import * as yup  from 'yup';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { signUp } from '../../api/user'
-import { UserTypes } from '../../types/UserType'
 import {yupResolver } from '@hookform/resolvers/yup';
+import { UserType } from '../../types/products';
 
 type RegisterProps = {
   
@@ -17,7 +17,7 @@ const fromSchema = yup.object().shape({
     .required("Email is required"),
   password: yup.string()
     .required("Password is required")
-    .min(4, 'Password length should be at least 4 characters'),
+    .min(6, 'Password length should be at least 4 characters'),
   confirmPassword: yup.string()
     .required("Password is required")
     .oneOf([yup.ref('password')], 'Passwords must and should match'),
@@ -26,8 +26,8 @@ const validation = {resolver: yupResolver(fromSchema)}
 type FormInputs = {
   username: string,
   email: string,
-  password: string,
-  confirmPassword:string
+  password: string | number,
+  confirmPassword:string | number
 }
 
 
@@ -37,7 +37,7 @@ const Register = (props: RegisterProps) => {
   const navigate = useNavigate();
   // console.log(register);
   const { errors } = formState
-  const onSubmit: SubmitHandler<FormInputs> = async (user:UserTypes) => {
+  const onSubmit: SubmitHandler<FormInputs> = async (user:UserType) => {
     console.log(user);
 
     try {

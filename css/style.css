@@ -137,12 +137,15 @@ html::-webkit-scrollbar-thumb{
 
 .header .header-1 .icons div,
 .header .header-1 .icons a{
+    margin: auto;
     font-size: 2.5rem;
     margin-left: 1.5rem;
     color:var(--black);
     cursor: pointer;
 }
-
+.header .header-1 .icons{
+    display: flex;
+}
 .header .header-1 .icons div:hover,
 .header .header-1 .icons a:hover{
     color:var(--green);
@@ -198,6 +201,50 @@ html::-webkit-scrollbar-thumb{
 .bottom-navbar a:hover{
     background:var(--dark-color);
 }
+
+
+.userHover:hover .menuUser{
+    display: block;
+  }
+  .userHover {
+    position: relative;
+  }
+  
+  .menuUser{
+      
+    left: -10%;
+    font-size: 16px;
+    float: left;
+    z-index: 2;
+    width: 170px;
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 8px 0 0 0 ;
+    padding: 5px;
+    margin: 0;
+   
+  }
+
+  .header .header-1 .icons .menuUser ul a{
+        margin: 0;
+    }
+  .header .header-1 .icons .menuUser ul {
+    margin: 0;
+    padding: 0;
+    }
+    .header .header-1 .icons .menuUser  {
+     margin: 0;
+        }
+  .header .header-1 .icons .menuUser ul a li{
+    font-size: 1.5rem;
+    display: inline-block;
+}
+
+
+
+
+
 
 /* --------------------------------login form -------------------------------------- */
 

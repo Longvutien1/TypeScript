@@ -27,21 +27,26 @@ const AdminLayout = (props: Props) => {
           <Menu mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']}style={{ height: '100%', borderRight: 0 }} >
 
             <SubMenu key="sub1" icon={<LaptopOutlined />} title="Product">
-              <Menu.Item key="1"><NavLink to='/admin/productmanager'>List Product</NavLink></Menu.Item>
-              <Menu.Item key="2"><NavLink to='/admin/add'>Add Product</NavLink></Menu.Item>
+              <Menu.Item key="1"><NavLink to='/admin/product'>List Product</NavLink></Menu.Item>
+              <Menu.Item key="2"><NavLink to='/admin/product/add'>Add Product</NavLink></Menu.Item>
             </SubMenu>
 
-            <SubMenu key="sub2" icon={<UserOutlined />} title="User">
-              <Menu.Item key="3">List User</Menu.Item>
-              <Menu.Item key="4">Add User</Menu.Item>
+            <SubMenu key="sub2" icon={<DollarOutlined />} title="Category">
+              <Menu.Item key="9"><NavLink to='/admin/category'>List Category</NavLink></Menu.Item>
+              <Menu.Item key="10"><NavLink to='/admin/category/add'>Add Category</NavLink></Menu.Item>
+            </SubMenu>
+
+            <SubMenu key="sub3" icon={<UserOutlined />} title="User">
+              <Menu.Item key="3"><NavLink to='/admin/user'>List User</NavLink></Menu.Item>
+              <Menu.Item key="4"><NavLink to='/admin/user/add'>Add User</NavLink></Menu.Item>
             </SubMenu>
            
-            <SubMenu key="sub3" icon={<CommentOutlined />} title="Order">
+            <SubMenu key="sub4" icon={<CommentOutlined />} title="Order">
               <Menu.Item key="5">List Order</Menu.Item>
               <Menu.Item key="6">Detail Order</Menu.Item>
             </SubMenu>
 
-            <SubMenu key="sub3" icon={<DollarOutlined />} title="Salary">
+            <SubMenu key="sub5" icon={<DollarOutlined />} title="Salary">
               <Menu.Item key="7">List Salary</Menu.Item>
               <Menu.Item key="8">Detail Salary</Menu.Item>
             </SubMenu>

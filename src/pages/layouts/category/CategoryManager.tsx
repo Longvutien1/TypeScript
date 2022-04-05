@@ -1,44 +1,40 @@
 import { Space, Table } from 'antd'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { CategoryType, ProductType } from '../../types/products'
+import { CategoryType, ProductType } from '../../../types/products'
 
-type ProductManagerProps = {
-    products: ProductType[],
-    
-    onRemove: (_id:number) => void
+type CategoryManagerProps = {
+    categories: CategoryType[],
+    onRemoveCategory: (_id:number) => void
 }
 
-const ProductManager =   ( { products, onRemove }: ProductManagerProps) => {
+const CategoryManager =   ( { categories, onRemoveCategory }: CategoryManagerProps) => {
 
     // title 
     const headings = [
         { title: "STT", dataIndex: "stt", key: "stt"},
         { title: "Name", dataIndex: "name", key: "name"},
-        { title: "Price", dataIndex: "price", key: "price"},
-        { title: "Category", dataIndex: "category", key: "category"},
+        // { title: "Id", dataIndex: "id", key: "id"},
         {
             title: "Action",
             key:'action',
             render:  (recore:any) => (
                 <Space size="middle">
                     {/* <a href='edit/:id' >Edit</a> */}
-                    <NavLink to={'/admin/product/edit/'+recore.id}>Edit</NavLink>
+                    <NavLink to={'/admin/category/edit/'+recore.id}>Edit</NavLink>
                     {/* <button onClick={ () => onRemove(id)}>Remove</button> */}
-                    <button  onClick={() => onRemove(recore.id)}>Delete</button>
+                    <button  onClick={() => onRemoveCategory(recore.id)}>Delete</button>
                 </Space>
             )
         }
     ]
 
     // data
-    const dataSourd =  products.map((item,index) => {
+    const dataSourd =  categories.map((item,index) => {
         return {
             key: index+ 1,
             stt: item._id,
             name: item.name,
-            price: item.price,
-            category: item.category,
             id: item._id,
         }
     })
@@ -46,8 +42,8 @@ const ProductManager =   ( { products, onRemove }: ProductManagerProps) => {
 
      return (
     <div>
-        <button className='btnAdmin'><NavLink to="/admin/product/add">Add Product</NavLink></button>
-            <h1>ProductManager</h1>
+        <button className='btnAdmin'><NavLink to="/admin/category/add">Add Category</NavLink></button>
+            <h1>CategoryManager</h1>
        
         <Table columns={headings} dataSource={dataSourd}></Table>
         
@@ -55,4 +51,4 @@ const ProductManager =   ( { products, onRemove }: ProductManagerProps) => {
   )
 }
 
-export default ProductManager
+export default CategoryManager

@@ -9,7 +9,7 @@ import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import AdminLayout from './pages/layouts/AdminLayout';
 import DetailProduct from './pages/DetailProduct';
 import { useEffect, useState } from 'react';
-import { ProductType } from './types/products';
+import { CategoryType, ProductType, UserType } from './types/products';
 import { addProduct, list, remove, update } from './api/products';
 import Login from './pages/user/login';
 import ProductManager from './pages/products/ProductManager';
@@ -17,32 +17,108 @@ import AddProduct from './pages/products/add';
 import EditProduct from './pages/products/edit';
 import PrivateRouter from './midlerware/PrivateRouter';
 import Register from './pages/user/Register';
+import UserManager from './pages/user/UserManager';
+import { addUser, getUserById, listUsers, removeUser, updateUser } from './api/user';
+import AddUser from './pages/user/add';
+import EditUser from './pages/user/edit';
+import CategoryManager from './pages/layouts/category/CategoryManager';
+import { addCategory, listCategory, removeCategory, updateCategory } from './api/category';
+import AddCategory from './pages/layouts/category/add';
+import EditCategory from './pages/layouts/category/edit';
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
-
+  const [users, setUsers] = useState<UserType[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
   useEffect(() => {
+        // get product
     const getProduct = async () => {
       const {data} = await list();
+      console.log(data);
+      
       setProducts(data);
+
     }
     getProduct();
+
+    // get User
+    const getUsers = async () => {
+      const {data} = await listUsers();
+  
+      
+      setUsers(data)
+    }
+    getUsers();
+
+    const getCategory = async () => {
+      const { data } = await listCategory();
+      setCategories(data);
+    }
+    getCategory();
   },[])
 
   const removeItem = async (id:number) => {
     // xóa trên api
     await remove(id);
     // reRender
-     setProducts(products.filter(item => item.id !== id))
+     setProducts(products.filter(item => item._id !== id))
   }
+  const onRemoveUser = async (id:number) => {
+    // xóa trên api
+    await removeUser(id)
+    // reRender
+    setUsers(users.filter(item => item._id !== id))
+  }
+
+  const onRemoveCategory = async (id:number) => {
+    // xóa trên api
+    await removeCategory(id)
+    // reRender
+    setCategories(categories.filter(item => item._id !== id))
+  }
+
 
   const onHandleAdd = async (product:ProductType) => {
     const {data} =  await addProduct(product);
     setProducts([...products, data])
   }
+  
+  const onHandlerUser = async (user: UserType) => {
+    console.log(user);
+    const {data} = await addUser(user);
+    console.log(data);
+    
+    setUsers([...users, data.user])
+  }
+
+  const onHandleCategory = async (category:CategoryType) => {
+    const {data} =  await addCategory(category);
+    console.log(data);
+    
+    setCategories([...categories, data])
+  }
 
   const onHandlerUpdate = async (product:ProductType) => {
     const {data} = await update(product);
-    setProducts(products.map(item => item.id === data.id ? data : item ));
+    setProducts(products.map(item => item._id === data._id ? data : item ));
+  }
+
+  const onHandlerUpdateCategory = async (category:CategoryType) => {
+    const {data} = await updateCategory(category);
+
+    setCategories(categories.map(item => item._id === data._id ? data : item ));
+  }
+  const onUpdatUser = async (user:UserType) => {
+    const {data} = await updateUser({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      password: user.password
+  });
+    // const {data} = await updateUser();
+    console.log(user);
+    
+    setUsers(users.map(item => item._id === data._id ? data : item))
   }
   return (
 
@@ -61,11 +137,27 @@ function App() {
             <Route path="/register" element={<Register/>}></Route>
 
             <Route path="admin" element={<PrivateRouter><AdminLayout/></PrivateRouter>}>
-                <Route index element={<Navigate to="productmanager"/>}/>
-                {/* <Route path="dashboard" element={<h1>Dashboard</h1>}/> */}
-                <Route path="productmanager" element={<ProductManager products={products} onRemove={removeItem}/>}/>
-                <Route path="add" element={<AddProduct onAdd={onHandleAdd}/>}/>
-                <Route path="edit/:id" element={<EditProduct onUpdate={onHandlerUpdate}/>}/>
+                <Route index element={<Navigate to="product"/>}/>
+                <Route path="product" >
+                  <Route index element={<ProductManager products={products}  onRemove={removeItem} />}/>
+                  <Route path="add" element={<AddProduct listCategory={categories} onAdd={onHandleAdd}/>}/>
+                  <Route path="edit/:id" element={<EditProduct onUpdate={onHandlerUpdate}/>}/>
+                </Route>
+              
+                {/* user manager */}
+                <Route path='user'>
+                  <Route index element={<UserManager users={users} onRemoveUser={onRemoveUser}/>} />
+                  <Route path='add' element={<AddUser onAddUser={onHandlerUser}/>}/>
+                  <Route path="edit/:id" element={<EditUser onUpdateUser={onUpdatUser}/>}/>
+
+                </Route>
+
+                {/* category manager */}
+                <Route path="category" >
+                  <Route index element={<CategoryManager categories={categories} onRemoveCategory={onRemoveCategory}/>}/>
+                  <Route path="add" element={<AddCategory onAddCategory={onHandleCategory}/>}/>
+                  <Route path="edit/:id" element={<EditCategory onUpdateCategory={onHandlerUpdateCategory}/>}/>
+                </Route>
             </Route>
           </Routes>
 
