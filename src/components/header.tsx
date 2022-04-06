@@ -55,8 +55,8 @@ const Header = (props: Props) => {
         </div>
         <div className="header-2">
           <nav className="navbar2">
-            <NavLink className="navLink" to="/#/">Home page</NavLink>
-            <NavLink className="navLink" to="/#/shop">Shop</NavLink>
+            <NavLink className="navLink" to="/">Home page</NavLink>
+            <NavLink className="navLink" to="/shop">Shop</NavLink>
             <NavLink className="navLink" to="/#/">featured</NavLink>
             <NavLink className="navLink" to="/#/">arrivals</NavLink>
             <NavLink className="navLink" to="/#/">reviews</NavLink>

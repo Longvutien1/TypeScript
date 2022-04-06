@@ -83,6 +83,7 @@ html::-webkit-scrollbar-thumb{
 
 .btn:hover{
     background:var(--dark-color);
+    color: #fff;
 }
 
 .header .header-1{

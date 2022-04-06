@@ -21,7 +21,7 @@ const HomePage = (props: Props) => {
     // xóa trên api
     const {data} = await remove(id);
     // reRender
-    data && setProducts(products.filter(item => item.id !== data._id));
+    data && setProducts(products.filter(item => item._id !== data._id));
   }
 
   useEffect(() => {

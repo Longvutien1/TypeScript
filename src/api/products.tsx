@@ -13,14 +13,18 @@ export const addProduct = (product: ProductType) => {
                 "Authorization": `Bearer ${token}`
             }
         })
-
-
 }
 
 
 
 export const list = () => {
     const url = '/products';
+    return instance.get(url);
+
+}
+
+export const top10Product = () => {
+    const url = '/products?_sort=view&_order=desc&_limit=5';
     return instance.get(url);
 
 }

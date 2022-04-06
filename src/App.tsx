@@ -25,6 +25,7 @@ import CategoryManager from './pages/layouts/category/CategoryManager';
 import { addCategory, listCategory, removeCategory, updateCategory } from './api/category';
 import AddCategory from './pages/layouts/category/add';
 import EditCategory from './pages/layouts/category/edit';
+import Shop from './pages/shop';
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [users, setUsers] = useState<UserType[]>([]);
@@ -132,7 +133,12 @@ function App() {
               <Route path="about" element={<AboutPage/>}/>
               <Route path="/product/:id" element={<DetailProduct />} /> 
             </Route>
-      
+
+            <Route path="/shop" element={<WebsiteLayout/>}>
+              <Route index element={<Shop data={products} listCategory={categories} />}/>
+              
+            </Route>
+
             <Route path="/login" element={<Login/>}></Route>
             <Route path="/register" element={<Register/>}></Route>
 
