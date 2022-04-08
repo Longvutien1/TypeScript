@@ -55,8 +55,9 @@ function App() {
       setCategories(data);
     }
     getCategory();
+  
   },[])
-
+ 
   const removeItem = async (id:number) => {
     // xóa trên api
     await remove(id);
@@ -80,6 +81,8 @@ function App() {
 
   const onHandleAdd = async (product:ProductType) => {
     const {data} =  await addProduct(product);
+    console.log(data);
+    
     setProducts([...products, data])
   }
   
@@ -131,7 +134,7 @@ function App() {
               <Route index element={<HomePage data={products} />}/>
               <Route path="product" element={<ProductPage/>}/>
               <Route path="about" element={<AboutPage/>}/>
-              <Route path="/product/:id" element={<DetailProduct />} /> 
+              <Route path="/detail/:id" element={<DetailProduct />} /> 
             </Route>
 
             <Route path="/shop" element={<WebsiteLayout/>}>
@@ -148,6 +151,7 @@ function App() {
                   <Route index element={<ProductManager products={products}  onRemove={removeItem} />}/>
                   <Route path="add" element={<AddProduct listCategory={categories} onAdd={onHandleAdd}/>}/>
                   <Route path="edit/:id" element={<EditProduct onUpdate={onHandlerUpdate}/>}/>
+    
                 </Route>
               
                 {/* user manager */}

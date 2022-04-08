@@ -24,7 +24,7 @@ export const list = () => {
 }
 
 export const top10Product = () => {
-    const url = '/products?_sort=view&_order=desc&_limit=5';
+    const url = '/products?_sort=price&_order=desc&_limit=5';
     return instance.get(url);
 
 }

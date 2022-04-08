@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { CategoryType, ProductType } from '../../types/products'
 import { useForm, SubmitHandler} from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
+import { message, Upload } from 'antd';
+import ImgCrop from 'antd-img-crop';
+import axios from 'axios';
+import { changImage, uploadImg } from '../../utils/upload';
 type AddProductProps = {
     listCategory: CategoryType[],
     onAdd: (product: ProductType) => void
@@ -10,19 +13,44 @@ type AddProductProps = {
 }
 
 type FormInputs = {
-    id:number
+    id?:number
     name: string,
     price: number,
+    img:string,
     category?: number
 }
+
+
 const AddProduct = ({listCategory, onAdd}: AddProductProps) => {
+   
     const { register, handleSubmit, formState} = useForm<FormInputs>();
     const navigate = useNavigate();
-    const onSubmit: SubmitHandler<FormInputs> = (data) =>{
-         onAdd(data);
-         console.log(data)  ;
-         
-         navigate('/admin/product')
+    useEffect(() => {
+      const imgPreview = document.getElementById("img-preview");
+      const imgPost = document.getElementById("file-upload");
+      
+     changImage(imgPost, imgPreview);
+    },[])
+
+   
+    const onSubmit: SubmitHandler<FormInputs> = async (product) =>{
+      const imgPost = document.querySelector("#file-upload");
+      const imgLink = await uploadImg(imgPost);
+           console.log(imgLink);
+            if (imgLink) {
+              onAdd({
+                name: product.name,
+                price: product.price,
+                img: imgLink,
+                category: product.category
+              })
+              await navigate('/admin/product')
+            }      
+     
+        console.log(product);
+
+        //  console.log(product);
+              
     }
     // listCategory.map(item => item.name)
    
@@ -30,16 +58,28 @@ const AddProduct = ({listCategory, onAdd}: AddProductProps) => {
     <div>
         <h1>Add Product</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-3">
+            <div className="mb-4">
                 <label htmlFor="exampleInputEmail1" className="form-label">Product name</label>
                 <input type="text" {...register('name',{required:true})} className="form-control" style={{fontSize:'13px'}} id="exampleInputEmail1"  />
             </div>
-            <div className="mb-3">
+            <div className="mb-4">
                 <label htmlFor="exampleInputPassword1" className="form-label">Price</label>
                 <input type="number" {...register('price', {required:true})} className="form-control" style={{fontSize:'13px'}} id="exampleInputPassword1" />
             </div>
 
-            <div className="mb-3">
+            <div className="mb-4">
+              <label htmlFor="exampleInputPassword1" className="form-label">Image</label>
+              <input className="form-control" type="file"  id="file-upload" multiple />
+
+              <div className="mt-1 flex items-center">
+                <span className="inline-block h-36 w-36 rounded-full overflow-hidden bg-gray-100">
+                  <img id="img-preview" src='' style={{width:"100px"}} />
+                </span> 
+              </div>
+
+            </div>
+
+            <div className="mb-4">
                 <select style={{border:"1px #ddd solid"}} {...register('category')} id="fruit">
                     {listCategory?.map((item) => (
                         <option value={item._id as number}>{item.name}</option>
@@ -49,6 +89,12 @@ const AddProduct = ({listCategory, onAdd}: AddProductProps) => {
                 </select>
                
             </div>
+
+         
+
+        
+
+
 
             <div className="mb-3">
                 <label htmlFor="exampleInputPassword1" className="form-label" >Desc</label>

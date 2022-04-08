@@ -5,7 +5,7 @@ import { ProductType } from '../types/products';
 
 type Props = {}
 
-const   DetailProduct = (props: Props) => {
+const DetailProduct = (props: Props) => {
     const {id} = useParams();
     const [products, setProduct] = useState<ProductType>();
     useEffect(() => {

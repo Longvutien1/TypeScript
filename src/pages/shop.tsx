@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { CategoryType, ProductType } from '../types/products'
 import { List, Card, Image, Button } from 'antd';
@@ -9,20 +9,28 @@ type ShopProps = {
     listCategory: CategoryType[]
 }
 
-const getProductTop10 = async () => {
+
+
+const Shop = ({data, listCategory}: ShopProps) => {
+
+  const [products, setProduct] = useState<ProductType[]>([]);
+
+ useEffect(() => {
+  const getProductTop10 = async () => {
     const {data} = await top10Product();
-      console.log(data);
+    setProduct(data)
       
 }
 
 getProductTop10();
-const Shop = ({data, listCategory}: ShopProps) => {
 
+ }, [])
   const dataSourd =  data.map((item,index) => {
     return {
         key: index+ 1,
         stt: item._id,
         name: item.name,
+        img: item.img,
         price: item.price
     }
   })
@@ -57,9 +65,25 @@ const Shop = ({data, listCategory}: ShopProps) => {
     </ul>
     <ul>
       <li className="border text-white pl-4 text-3xl py-2 mt-8" style={{backgroundColor: '#27ae60', color: '#fff', fontSize:"18px", paddingLeft:"16px"}}>FAVORITE PRODUCTS</li>
-      ${'{'}await ListProduct.listProductTopViewShop(){'}'}
+     <div>
+        {products?.map((item) => <div>
+          <li className="border px-4  py-2 flex gap-4" style={{border: '1px solid #27ae60', display:"flex", gap:"16px"}}>
+            <NavLink to={'/detail/'+item._id}><img src={item.img}  width={120} /></NavLink>
+            <div>
+              <NavLink className="text-md" to={'/detail/'+item._id}>{item.name}</NavLink>
+              <p className="text-gray-400 text-md font-semibold line-through" style={{textDecoration:"line-through", color:"gray"}}>${item.price}</p>
+              <p className="text-yellow-500 text-md font-semibold" style={{color:"orange"}}>${item.price}</p>
+            </div>
+          </li>
+          </div>
+          )}
+       
+
+      </div>
+
       <li className="border px-4  py-2" style={{backgroundColor: '#27ae60'}}>
         <p className="p-3" />
+     
       </li>
     </ul>
   </div>
@@ -75,14 +99,14 @@ const Shop = ({data, listCategory}: ShopProps) => {
         onChange: page => {
           console.log(page);
         },
-        pageSize: 6,
+        pageSize: 9,
       }}
       renderItem={item => (
         <List.Item>
           
-          <Card title={<Image width={230}  src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />}>
-              <p>{item.name}</p>
-              <p> ${item.price}</p>
+          <Card title={<Image width={150} style={{textAlign:"center"}}  src={item.img} />}>
+              <p>{item.name}   <p> ${item.price}</p></p>
+            
               <NavLink to="" data-id="${item.id}" className="btn" id="btnAddToCart">add to cart</NavLink>
           </Card>
         </List.Item>

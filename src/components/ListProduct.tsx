@@ -30,12 +30,11 @@ const ListProduct =  (props: Props) => {
         <div className="swiper-wrapper products-container">
 
             {products?.map((item) => 
-          
                 <div className="swiper-slide box">
                     <div className="icons">
                         <NavLink to="" className="fas fa-shopping-cart" > </NavLink>
                         <NavLink to="" className="fas fa-heart"> </NavLink>
-                        <NavLink to="/detail_product/${item.id}" className="fas fa-eye" > </NavLink>
+                        <NavLink to={'detail/'+item._id} className="fas fa-eye" > </NavLink>
                     </div>    
                     <div className="image product" data-name="p-${item.id}">
                         <img src="../image/book-2.png" />
