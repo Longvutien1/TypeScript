@@ -10,11 +10,11 @@ import Header from '../components/header';
 import Footer from "../components/footer";
 import ListProduct from "../components/ListProduct";
 
-type Props = {
+type HomePageProps = {
   data: ProductType[]
 }
 
-const HomePage = (props: Props) => {
+const HomePage = ({data}: HomePageProps) => {
 
   const [products, setProducts] = useState<ProductType[]>([]);
   const removeItem = async (id:number) => {
@@ -29,7 +29,7 @@ const HomePage = (props: Props) => {
          const swiper2 = new Swiper(".featured-slider", {
           spaceBetween: 10,
           loop: true,
-          centeredSlides: true,
+          // centeredSlides: true,
           autoplay: {
               delay: 9500,
               disableOnInteraction: false,
@@ -53,6 +53,7 @@ const HomePage = (props: Props) => {
               },
           },
       });
+      swiper2
     const swiper = new Swiper(".books-slider", {
       loop: true,
 
@@ -75,7 +76,7 @@ const HomePage = (props: Props) => {
       },
   });
   // Sswiper.onload();
-
+  swiper
   
   // eslint-disable-next-line no-unused-vars
   const swiper3 = new Swiper(".arrivals-slider", {
@@ -98,6 +99,7 @@ const HomePage = (props: Props) => {
           },
       },
   });
+  swiper3
   // eslint-disable-next-line no-unused-vars
   const swiper4 = new Swiper(".reviews-slider", {
       spaceBetween: 10,
@@ -198,7 +200,37 @@ const HomePage = (props: Props) => {
       {/* icons section end  */}
       {/* featured section starts  */}
       
-        <ListProduct/>
+        <section className="featured" id="featured">
+          <h1 className="heading"> <span>featured books</span></h1>
+          <div className="swiper featured-slider" style={{zIndex: 0}}>
+          <div className="swiper-wrapper products-container">
+
+              {data?.map((item) => 
+                  <div className="swiper-slide box">
+                      <div className="icons">
+                          <NavLink to="" className="fas fa-shopping-cart" > </NavLink>
+                          <NavLink to="" className="fas fa-heart"> </NavLink>
+                          <NavLink to={'detail/'+item._id} className="fas fa-eye" > </NavLink>
+                      </div>    
+                      <div className="image product" data-name="p-${item.id}">
+                          <img src={item.img} />
+                      </div>
+                      <div className="content">
+                          <h3>{item.name}</h3>
+                          <div className="price">$ {item.price} <span>$99.00</span></div>
+                          <a data-id="${item.id}" className="btn" id="btnAddToCart">add to cart</a>
+                      </div>
+                  </div>
+              )}
+          </div>
+          {/* <div className="swiper-button-next" />
+          <div className="swiper-button-prev" /> */}
+          </div>
+
+        
+      </section>
+
+        {/* <ListProduct/> */}
 
       {/* featured section ends */}
 
