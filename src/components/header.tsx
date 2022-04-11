@@ -31,7 +31,7 @@ const Header = (props: Props) => {
           </form>
           <div className="icons">
             <div id="search-btn" className="fas fa-search" />
-            <NavLink to="/#/cart" className="fas fa-shopping-cart"> </NavLink>
+            <NavLink to="/cart" className="fas fa-shopping-cart"> </NavLink>
            
             {localStorage.getItem("user") ?
               <div className="userHover "><span><i className="fas fa-user mr-2" /></span>

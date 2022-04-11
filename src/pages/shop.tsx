@@ -6,7 +6,7 @@ import { getProductByName, top10Product } from '../api/products';
 import { listProductByCategory } from '../api/category';
 import { Option } from 'antd/lib/mentions';
 // import { searchByName } from '../utils/upload';
-
+import { CartProvider, useCart } from "react-use-cart";
 type ShopProps = {
   fullProduct: ProductType[],
   listCategory: CategoryType[]
@@ -18,7 +18,7 @@ const Shop =  ({fullProduct, listCategory}: ShopProps) => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [productsTop10, setProductTop10] = useState<ProductType[]>([]);
   const { Option } = Select;
-
+  const { addItem } = useCart();
 function handleChange(value:any) {
   console.log(`selected ${value}`);
 }
@@ -63,14 +63,34 @@ const searchByName =  () => {
   listProductByCate(id);
   
  }
-
+ const products2 = [
+  {
+    id: 1,
+    name: "Malm",
+    price: 9900,
+    quantity: 1
+  },
+  {
+    id: 2,
+    name: "Nordli",
+    price: 16500,
+    quantity: 5
+  },
+  {
+    id: 3,
+    name: "Kullen",
+    price: 4500,
+    quantity: 1
+  },
+];
  dataSourd = products.map((item,index) => {
   return {
       key: index+ 1,
-      stt: item._id,
+      id: item._id,
       name: item.name,
       img: item.img,
-      price: item.price
+      price: item.price,
+      quantity: 1
   }
 })
  
@@ -146,10 +166,10 @@ const searchByName =  () => {
       renderItem={item => (
         <List.Item>
           
-          <Card title={<Image width={150} style={{textAlign:"center"}}  src={item.img} />}>
+          <Card key={item.id} title={<Image width={150} style={{textAlign:"center"}}  src={item.img} />}>
               <p>{item.name}   <p> ${item.price}</p></p>
             
-              <NavLink to="" data-id="${item.id}" className="btn" id="btnAddToCart">add to cart</NavLink>
+              <button  data-id="${item.id}" className="btn" onClick={() => addItem(item)} id="btnAddToCart">add to cart</button>
           </Card>
         </List.Item>
       )}

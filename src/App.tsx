@@ -26,6 +26,9 @@ import { addCategory, listCategory, removeCategory, updateCategory } from './api
 import AddCategory from './pages/layouts/category/add';
 import EditCategory from './pages/layouts/category/edit';
 import Shop from './pages/shop';
+import Cart from './pages/Cart/cart';
+import {CartProvider} from 'react-use-cart'
+import CartManager from './pages/Cart/CartManager';
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [users, setUsers] = useState<UserType[]>([]);
@@ -140,9 +143,13 @@ function App() {
             </Route>
 
             <Route path="/shop" element={<WebsiteLayout/>}>
-              <Route index element={<Shop fullProduct={products} listCategory={categories} />}/>
+              <Route index element={<CartProvider><Shop fullProduct={products} listCategory={categories} /></CartProvider>}/>
               <Route path=":id" element={<Shop fullProduct={products} listCategory={categories} />}/>
-              <Route path=":search" element={<Shop fullProduct={products} listCategory={categories} />}/>
+            </Route>
+
+            <Route path="/cart" element={<WebsiteLayout/>}>
+              <Route index element={<CartProvider><Cart/></CartProvider>}/>
+            
             </Route>
 
             <Route path="/login" element={<Login/>}></Route>
