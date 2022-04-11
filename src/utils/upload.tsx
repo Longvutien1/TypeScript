@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getProductByName } from "../api/products";
 
 
 export const uploadImg = async (imgPost:any) => {
@@ -37,3 +38,5 @@ export const changImage = (imgPost:any, imgPreview:any) => {
     });
    }
 }
+
+

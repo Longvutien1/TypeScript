@@ -1,41 +1,79 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { CategoryType, ProductType } from '../types/products'
-import { List, Card, Image, Button } from 'antd';
-import { top10Product } from '../api/products';
+import { List, Card, Image, Button, Select } from 'antd';
+import { getProductByName, top10Product } from '../api/products';
+import { listProductByCategory } from '../api/category';
+import { Option } from 'antd/lib/mentions';
+// import { searchByName } from '../utils/upload';
 
 type ShopProps = {
-    data: ProductType[],
-    listCategory: CategoryType[]
+  fullProduct: ProductType[],
+  listCategory: CategoryType[]
 }
 
 
 
-const Shop = ({data, listCategory}: ShopProps) => {
+const Shop =  ({fullProduct, listCategory}: ShopProps) => {
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [productsTop10, setProductTop10] = useState<ProductType[]>([]);
+  const { Option } = Select;
 
-  const [products, setProduct] = useState<ProductType[]>([]);
-
+function handleChange(value:any) {
+  console.log(`selected ${value}`);
+}
+  const {id} = useParams();
+  var dataSourd = [] ;
+  
+  
  useEffect(() => {
+   setProducts(fullProduct);
+
   const getProductTop10 = async () => {
     const {data} = await top10Product();
-    setProduct(data)
-      
+    // console.log(data );
+    
+    setProductTop10(data)
 }
+    getProductTop10();
+ }, [fullProduct])
 
-getProductTop10();
 
- }, [])
-  const dataSourd =  data.map((item,index) => {
-    return {
-        key: index+ 1,
-        stt: item._id,
-        name: item.name,
-        img: item.img,
-        price: item.price
+  
+
+const searchByName =  () => {
+  const search = document.querySelector("#search"); 
+    const getSearch = async (search:any) => {
+      const {data} = await getProductByName(search.value); 
+      // console.log(data);
+     
+      setProducts(data)
     }
-  })
+    getSearch(search);
+ }
 
 
+
+ if (id) {
+  const listProductByCate = async (id:any) => {
+    const {data} = await listProductByCategory(id);
+    setProducts(data.products);
+    // console.log(data.products);
+  }  
+  listProductByCate(id);
+  
+ }
+
+ dataSourd = products.map((item,index) => {
+  return {
+      key: index+ 1,
+      stt: item._id,
+      name: item.name,
+      img: item.img,
+      price: item.price
+  }
+})
+ 
   
   return (
     <section className="container-shop">
@@ -44,7 +82,7 @@ getProductTop10();
       <p className="text-3xl mb-2" style={{fontSize:"24px", marginBottom:"8px"}}>Sreach</p>
       <div className="w-full border border-solid flex justify-between" style={{display:"flex", justifyContent:"space-between"}}>
         <input className="w-10/12 p-1 outline-none  normal-case" style={{width:"80%", outline:"none"}} id="search" type="text" placeholder="Tìm kiếm" name="search" />
-        <button className="w-2/12  mx-auto btn_search" style={{width:"20%",margin:"auto", background:"none"}} id="btn-search" type="submit" name="submitSearch"><i className="fas fa-search" /></button>
+        <button  className="w-2/12  mx-auto btn_search" onClick={() => searchByName()} style={{width:"20%",margin:"auto", background:"none"}} id="btn-search" type="submit" ><i className="fas fa-search" /></button>
       </div>
     </div>
     <ul>
@@ -66,7 +104,7 @@ getProductTop10();
     <ul>
       <li className="border text-white pl-4 text-3xl py-2 mt-8" style={{backgroundColor: '#27ae60', color: '#fff', fontSize:"18px", paddingLeft:"16px"}}>FAVORITE PRODUCTS</li>
      <div>
-        {products?.map((item) => <div>
+        {productsTop10?.map((item) => <div>
           <li className="border px-4  py-2 flex gap-4" style={{border: '1px solid #27ae60', display:"flex", gap:"16px"}}>
             <NavLink to={'/detail/'+item._id}><img src={item.img}  width={120} /></NavLink>
             <div>
@@ -89,7 +127,11 @@ getProductTop10();
   </div>
   <div className="right col-span-9">
     <h4 className="italic text-3xl text-center text-red-200" style={{marginTop:"17px"}}>Sản Phẩm Của Chúng Tôi</h4>
-    
+    <Select defaultValue="all" style={{ width: 150 , marginBottom: 20}} onChange={handleChange}>
+      <Option value="all">All</Option>
+      <Option value="lucy">Cao xuống thấp</Option>
+      <Option value="Yiminghe">Thấp tới cao</Option>
+    </Select>
     {/* <div id="product" className="product-shop sm:grid sm:grid-cols-1 sm:grid sm:grid-cols-2 lg:grid lg:grid-cols-3 gap-8 mt-8 "> */}
     <List
       grid={{ gutter: 16, column: 3 }}
@@ -97,7 +139,7 @@ getProductTop10();
       dataSource={dataSourd}
       pagination={{
         onChange: page => {
-          console.log(page);
+          // console.log(page);
         },
         pageSize: 9,
       }}

@@ -27,3 +27,9 @@ export const removeCategory = (id:number) => {
     const url = `/categories/${id}`;
     return instance.delete(url);
 }
+
+export const listProductByCategory = (id:number) => {
+    const url = `/categories/${id}`;
+    return instance.get(url);
+}
+

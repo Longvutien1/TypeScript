@@ -3,7 +3,11 @@ export type ProductType = {
     name: String,
     price: Number,
     img:string,
-    category?: number
+    category?: number,
+    updatedAt? : Date,
+    createdAt?: Date,
+    __v?: number,
+
 }
 
 export type UserType = {

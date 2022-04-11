@@ -45,3 +45,8 @@ export const update = (product:ProductType) => {
     const url = `/products/${product._id}`;
     return instance.put(url, product);
 }
+
+export const getProductByName = (productName:string) => {
+    const url = `/products?productName=${productName}`;
+    return instance.get(url);
+};

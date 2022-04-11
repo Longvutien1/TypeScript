@@ -34,7 +34,7 @@ function App() {
         // get product
     const getProduct = async () => {
       const {data} = await list();
-      console.log(data);
+      // console.log(data);
       
       setProducts(data);
 
@@ -56,8 +56,10 @@ function App() {
     }
     getCategory();
   
+
   },[])
- 
+  
+
   const removeItem = async (id:number) => {
     // xóa trên api
     await remove(id);
@@ -138,8 +140,9 @@ function App() {
             </Route>
 
             <Route path="/shop" element={<WebsiteLayout/>}>
-              <Route index element={<Shop data={products} listCategory={categories} />}/>
-              
+              <Route index element={<Shop fullProduct={products} listCategory={categories} />}/>
+              <Route path=":id" element={<Shop fullProduct={products} listCategory={categories} />}/>
+              <Route path=":search" element={<Shop fullProduct={products} listCategory={categories} />}/>
             </Route>
 
             <Route path="/login" element={<Login/>}></Route>
