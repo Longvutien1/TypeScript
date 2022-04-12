@@ -9,8 +9,7 @@ export const listCategory = () => {
 
 export const addCategory = (product: CategoryType) => {
     const url = `/categories`;
-    return instance.post(url, product,{
-    })
+    return instance.post(url, product)
 
 }
 

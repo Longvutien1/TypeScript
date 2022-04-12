@@ -9,7 +9,7 @@ import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import AdminLayout from './pages/layouts/AdminLayout';
 import DetailProduct from './pages/DetailProduct';
 import { useEffect, useState } from 'react';
-import { CategoryType, ProductType, UserType } from './types/products';
+import { CategoryType, OrderType, ProductType, UserType } from './types/products';
 import { addProduct, list, remove, update } from './api/products';
 import Login from './pages/user/login';
 import ProductManager from './pages/products/ProductManager';
@@ -29,10 +29,12 @@ import Shop from './pages/shop';
 import Cart from './pages/Cart/cart';
 import {CartProvider} from 'react-use-cart'
 import CartManager from './pages/Cart/CartManager';
+import { addOrder } from './api/order';
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [users, setUsers] = useState<UserType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [orders, setOrders] = useState<OrderType[]>([]);
   useEffect(() => {
         // get product
     const getProduct = async () => {
@@ -89,6 +91,12 @@ function App() {
     console.log(data);
     
     setProducts([...products, data])
+  }
+  const onHandleOrder = async (product:OrderType) => {
+    const {data} =  await addOrder(product);
+    console.log(data);
+    
+    setOrders([...products, data])
   }
   
   const onHandlerUser = async (user: UserType) => {
@@ -148,7 +156,7 @@ function App() {
             </Route>
 
             <Route path="/cart" element={<WebsiteLayout/>}>
-              <Route index element={<CartProvider><Cart/></CartProvider>}/>
+              <Route index element={<CartProvider><Cart onAddOrder={onHandleOrder}/></CartProvider>}/>
             
             </Route>
 

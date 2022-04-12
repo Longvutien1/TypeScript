@@ -40,3 +40,12 @@ export const changImage = (imgPost:any, imgPreview:any) => {
 }
 
 
+export const thanhT = (btnThanhToan:any, formThanhToan:any, remove:any) => {
+  btnThanhToan.addEventListener("click", () => {
+    formThanhToan.classList.add("active");
+  });
+
+  remove.onclick = () => {
+      formThanhToan.classList.remove("active");
+  };
+}

@@ -22,3 +22,20 @@ export type CategoryType = {
     _id?: Number,
     name: String
 }
+
+export type OrderType = {
+   
+    userInfomation:{
+        id?:number
+        name: string,
+        price: number,
+        img:string,
+        quantity?: number,
+        cartTotal?: number,
+        category?: number
+      },
+      product:{
+          listProduct: []
+      }
+      
+}
