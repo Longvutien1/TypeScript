@@ -1,10 +1,11 @@
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
-
+import { CartProvider, useCart } from "react-use-cart";
 type Props = {}
 
 const Header = (props: Props) => {
   const navigate = useNavigate();
+  const { isEmpty, totalUniqueItems, items, totalItems, cartTotal, updateItemQuantity, removeItem, emptyCart } = useCart();
   const logout = () => {
     const logout = document.querySelector("#logout");
     if (logout) {
@@ -31,7 +32,7 @@ const Header = (props: Props) => {
           </form>
           <div className="icons">
             <div id="search-btn" className="fas fa-search" />
-            <NavLink to="/cart" className="fas fa-shopping-cart"> </NavLink>
+            <NavLink to="/cart" className="fas fa-shopping-cart"> {totalUniqueItems}</NavLink>
            
             {localStorage.getItem("user") ?
               <div className="userHover "><span><i className="fas fa-user mr-2" /></span>
@@ -66,7 +67,7 @@ const Header = (props: Props) => {
             <span>Hello {localStorage.getItem("user") ? `
                   ${JSON.parse(String(localStorage.getItem("user"))).user.username}
                 `: ""}</span>
-          </nav>
+          </nav>  
 
         </div>
       </div>

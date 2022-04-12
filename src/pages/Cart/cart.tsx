@@ -30,8 +30,8 @@ const Cart = (props: Props) => {
                   <td>{item.price}</td>
                   <td>{item.quantity}</td>
                   <td>
-                    <button onClick={() => updateItemQuantity(item.id, item.quantity -1)}>-</button>
-                    <button onClick={() => updateItemQuantity(item.id, item.quantity +1)}>+</button>
+                    <button onClick={() => updateItemQuantity(item.id, Number(item.quantity) -1)}>-</button>
+                    <button onClick={() => updateItemQuantity(item.id, Number(item.quantity) +1)}>+</button>
                     <button onClick={() => removeItem(item.id)}>Remove</button>
                   </td>
                 </tr> 
