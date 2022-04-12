@@ -29,7 +29,9 @@ import Shop from './pages/shop';
 import Cart from './pages/Cart/cart';
 import {CartProvider} from 'react-use-cart'
 import CartManager from './pages/Cart/CartManager';
-import { addOrder } from './api/order';
+import { addOrder, listOrder } from './api/order';
+import OrderManager from './pages/order/OrderManager';
+import DetailOrder from './pages/order/DetailOrder';
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [users, setUsers] = useState<UserType[]>([]);
@@ -61,6 +63,11 @@ function App() {
     }
     getCategory();
   
+    const getOrders = async () => {
+      const { data } = await listOrder();
+      setOrders(data);
+    }
+    getOrders();
 
   },[])
   
@@ -185,6 +192,12 @@ function App() {
                   <Route index element={<CategoryManager categories={categories} onRemoveCategory={onRemoveCategory}/>}/>
                   <Route path="add" element={<AddCategory onAddCategory={onHandleCategory}/>}/>
                   <Route path="edit/:id" element={<EditCategory onUpdateCategory={onHandlerUpdateCategory}/>}/>
+                </Route>
+
+                 {/* order manager */}
+                 <Route path="order" >
+                  <Route index element={<OrderManager orders={orders} />}/>
+                  <Route path="edit/:id" element={<DetailOrder />}/>
                 </Route>
             </Route>
           </Routes>

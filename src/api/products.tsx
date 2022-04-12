@@ -16,7 +16,6 @@ export const addProduct = (product: ProductType) => {
 }
 
 
-
 export const list = () => {
     const url = '/products';
     return instance.get(url);

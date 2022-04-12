@@ -42,8 +42,7 @@ const AdminLayout = (props: Props) => {
             </SubMenu>
            
             <SubMenu key="sub4" icon={<CommentOutlined />} title="Order">
-              <Menu.Item key="5">List Order</Menu.Item>
-              <Menu.Item key="6">Detail Order</Menu.Item>
+              <Menu.Item key="5"><NavLink to='/admin/order'>List Order</NavLink></Menu.Item>
             </SubMenu>
 
             <SubMenu key="sub5" icon={<DollarOutlined />} title="Salary">

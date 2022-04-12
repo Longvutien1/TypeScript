@@ -2,11 +2,15 @@ export type ProductType = {
     _id?: Number,
     name: String,
     price: Number,
-    img:string,
+    img: string,
     category?: number,
-    updatedAt? : Date,
+    updatedAt?: Date,
     createdAt?: Date,
     __v?: number,
+  
+
+    itemTotal?: number,
+    quantity?: number,
 
 }
 
@@ -24,18 +28,27 @@ export type CategoryType = {
 }
 
 export type OrderType = {
-   
-    userInfomation:{
-        id?:number
-        name: string,
-        price: number,
-        img:string,
-        quantity?: number,
-        cartTotal?: number,
-        category?: number
-      },
-      product:{
-          listProduct: []
-      }
-      
+    _id?:number,
+    createdAt?:Date,
+    userInfomation: {
+        name?: string,
+        phone?: string,
+        address?: string,
+        specificaddress?:string,
+        noinhan?:string
+    },
+    listproduct: [
+        {
+            key?:number,
+            id?: string,
+            img?: string,
+            itemTotal?: number
+            price?: number,
+            name?: string,
+            quantity?: number,
+        }
+    ],
+    cartTotal: number,
+    status: number
+
 }
