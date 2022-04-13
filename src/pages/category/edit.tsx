@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getCategoryById } from '../../../api/category'
-import { CategoryType } from '../../../types/products'
+import { getCategoryById } from '../../api/category'
+import { CategoryType } from '../../types/products'
 // import { getProductById, list } from '../../api/products'
 // import { ProductType } from '../../types/products'
 

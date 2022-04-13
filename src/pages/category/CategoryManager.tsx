@@ -1,7 +1,7 @@
 import { Space, Table } from 'antd'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { CategoryType, ProductType } from '../../../types/products'
+import { CategoryType, ProductType } from '../../types/products'
 
 type CategoryManagerProps = {
     categories: CategoryType[],

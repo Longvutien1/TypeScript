@@ -37,7 +37,7 @@ export type OrderType = {
         specificaddress?:string,
         noinhan?:string
     },
-    listproduct: [
+    listproduct?: [
         {
             key?:number,
             id?: string,
@@ -49,6 +49,6 @@ export type OrderType = {
         }
     ],
     cartTotal: number,
-    status: number
+    status: string
 
 }

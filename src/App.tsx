@@ -21,17 +21,20 @@ import UserManager from './pages/user/UserManager';
 import { addUser, getUserById, listUsers, removeUser, updateUser } from './api/user';
 import AddUser from './pages/user/add';
 import EditUser from './pages/user/edit';
-import CategoryManager from './pages/layouts/category/CategoryManager';
+import CategoryManager from './pages/category/CategoryManager';
 import { addCategory, listCategory, removeCategory, updateCategory } from './api/category';
-import AddCategory from './pages/layouts/category/add';
-import EditCategory from './pages/layouts/category/edit';
+import AddCategory from './pages/category/add';
+import EditCategory from './pages/category/edit';
 import Shop from './pages/shop';
 import Cart from './pages/Cart/cart';
 import {CartProvider} from 'react-use-cart'
 import CartManager from './pages/Cart/CartManager';
-import { addOrder, listOrder } from './api/order';
+import { addOrder, listOrder, removeOrder, updateOrder } from './api/order';
 import OrderManager from './pages/order/OrderManager';
 import DetailOrder from './pages/order/DetailOrder';
+import MyAccount from './pages/MyAccount';
+// import OrderManager from './pages/layouts/order/OrderManager';
+// import DetailOrder from './pages/layouts/order/DetailOrder';
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [users, setUsers] = useState<UserType[]>([]);
@@ -92,6 +95,13 @@ function App() {
     setCategories(categories.filter(item => item._id !== id))
   }
 
+  const onRemoveOrder = async (id:number) => {
+    // xóa trên api
+    await removeOrder(id)
+    // reRender
+    setOrders(orders.filter(item => item._id !== id))
+  }
+
 
   const onHandleAdd = async (product:ProductType) => {
     const {data} =  await addProduct(product);
@@ -144,6 +154,12 @@ function App() {
     
     setUsers(users.map(item => item._id === data._id ? data : item))
   }
+
+  const onUpdateOrder = async (order:OrderType) => {
+    const {data} = await updateOrder(order);
+
+    setOrders(orders.map(item => item._id === data._id ? data : item ));
+  }
   return (
 
     <div >
@@ -155,6 +171,7 @@ function App() {
               <Route path="product" element={<ProductPage/>}/>
               <Route path="about" element={<AboutPage/>}/>
               <Route path="/detail/:id" element={<DetailProduct />} /> 
+              <Route path="/myAccount" element={<MyAccount/>}/>
             </Route>
 
             <Route path="/shop" element={<WebsiteLayout/>}>
@@ -196,8 +213,8 @@ function App() {
 
                  {/* order manager */}
                  <Route path="order" >
-                  <Route index element={<OrderManager orders={orders} />}/>
-                  <Route path="edit/:id" element={<DetailOrder />}/>
+                  <Route index element={<OrderManager orders={orders} onRemoveOrder={onRemoveOrder} />}/>
+                  <Route path="edit/:id" element={<DetailOrder onUpdateOrder={onUpdateOrder}/>}/>
                 </Route>
             </Route>
           </Routes>

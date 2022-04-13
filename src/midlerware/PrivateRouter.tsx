@@ -6,17 +6,13 @@ type PrivateRouterProps = {
 }
 
 const PrivateRouter = (props: PrivateRouterProps) => {
-    const isAdmin = true;
-    if (!isAdmin) {
-        return <Navigate to="/login"/>
+    const isAdmin = JSON.parse(String(localStorage.getItem("user"))).user.role;
+    console.log(isAdmin);
+    
+    if (isAdmin == 0) {
+        return <Navigate to="/"/>
     }
-    if (localStorage.getItem("user")) {     
-        // const role = JSON.parse(String(localStorage.getItem("user"))).user.role;
-        // if (!(role == 1)) {
-        //     return <Navigate to="/login"/>
-        // }
-        
-    }
+ 
   return props.children
 }
 

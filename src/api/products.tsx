@@ -4,9 +4,8 @@ import instance from "./instance";
 
 // gọi token and user trong localstorage 
 
-const {token, user} = isAuthencicate();
 
-export const addProduct = (product: ProductType) => {
+export const addProduct = (product: ProductType, {token, user} = isAuthencicate()) => {
         const url = `/products/${user._id}`;
         return instance.post(url, product,{
             headers: {

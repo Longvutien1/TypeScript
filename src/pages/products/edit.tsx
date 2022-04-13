@@ -10,7 +10,8 @@ type EditProductProps = {
 type FormInputs = {
   name:string,
   price:number,
-  category: number
+  category: number,
+  img:string
 }
 const EditProduct = ({onUpdate}: EditProductProps) => {
 

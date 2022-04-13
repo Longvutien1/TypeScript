@@ -26,19 +26,30 @@ const Login = (props: Props) => {
   const {register, handleSubmit, formState} = useForm<FormInputs>(validation);
   const { errors } = formState
   const navigate = useNavigate();
-  const onSubmit: SubmitHandler<FormInputs> = async (data:UserType) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormInputs> = async (user:UserType) => {
+    console.log(user);
 
-      try {
-        const {data: user} = await signIn(data);
-          console.log("data"+data);
-          alert("Đăng nhạp thành công");
-          localStorage.setItem("user", JSON.stringify(user))
-          navigate('/');
+     
+        const login = await signIn(user);
+          console.log(login.data.message);
 
-      } catch (error) {
-        alert("Đăng nhập thất bại");
-      }
+          if (login.data.message) {
+              alert(login.data.message)
+          }else{
+              localStorage.setItem("user", JSON.stringify(login.data))
+              alert("Đăng nhạp thành công");
+           
+            navigate('/');
+          }
+           
+           
+
+            
+
+           
+      
+          
+
 
   }
   return (

@@ -1,20 +1,34 @@
 import { Space, Table } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { OrderType } from '../../types/products'
+import { statusOrder } from '../../utils/upload'
+// import { OrderType } from '../../../types/products'
+// import { statusOrder } from '../../../utils/upload'
 
 type Props = {
     orders: OrderType[],
+    onRemoveOrder: (id:number) => void
 }
 
-const OrderManager = ({orders}: Props) => {
+const OrderManager = ({orders, onRemoveOrder}: Props) => {
+
+    useEffect(() => {
+        const statusListOrder = document.querySelectorAll("#statusListOrder");
+         statusOrder(statusListOrder)
+    },[orders])
   // title 
   const headings = [
     { title: "STT", dataIndex: "stt", key: "stt"},
     { title: "Name", dataIndex: "name", key: "name"},
     { title: "Phone", dataIndex: "phone", key: "phone"},
     { title: "Address", dataIndex: "address", key: "address"},
-    { title: "Status", dataIndex: "category", key: "category"},
+    { 
+        title: "Status",
+        dataIndex: "status", 
+        key: "status",
+    },
+
     {
         title: "Action",
         key:'action',
@@ -22,8 +36,8 @@ const OrderManager = ({orders}: Props) => {
             <Space size="middle">
                 {/* <a href='edit/:id' >Edit</a> */}
                 <NavLink to={'/admin/order/edit/'+recore.id}>Detail Order</NavLink>
-                {/* <button onClick={ () => onRemove(id)}>Remove</button> */}
-                <button >Delete</button>
+                <button onClick={ () => onRemoveOrder(recore.id)}>Remove</button>
+                {/* <button >Delete</button> */}
             </Space>
         )
     }
@@ -40,10 +54,7 @@ const dataSourd =  orders.map((item,index) => {
         name: item.userInfomation.name,
         phone: item.userInfomation.phone,
         address: item.userInfomation.address,
-        status: 1,
-        // img: <img src={item.img} alt="" style={{width:"100px"}} />,
-        // price: item.price,
-        // category: item.category,
+        status:   <div id="statusListOrder" data-id2={item.status} className=" text-center px-2 py-1 rounded-md " />,
         id: item._id
     }
 })

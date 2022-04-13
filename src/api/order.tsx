@@ -17,3 +17,13 @@ export const addOrder = (order:OrderType  ) => {
     return instance.post(url,order)
 
 }
+
+export const removeOrder = (id:number) => {
+    const url = `/orders/${id}`;
+    return instance.delete(url);
+}
+
+export const updateOrder = (order:OrderType) => {
+    const url = `/orders/${order._id}`;
+    return instance.put(url, order);
+}

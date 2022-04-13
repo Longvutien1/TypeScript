@@ -49,3 +49,30 @@ export const thanhT = (btnThanhToan:any, formThanhToan:any, remove:any) => {
       formThanhToan.classList.remove("active");
   };
 }
+
+
+
+export const statusOrder = (statusListOrder:any) => {
+  statusListOrder.forEach((stt:any) => {
+    const { id2 } = stt.dataset;
+    statusListOrder.innerHTML = "<p style='background-color: greenyellow; padding: 5px 15px;border: 1px solid #3f3f3f; color:black ;border-radius: 8px;font-weight: 400;'>Chưa duyệt</p>";
+    console.log(stt);
+
+    if (id2 === "0") {
+        // eslint-disable-next-line no-param-reassign
+        stt.innerHTML = "<p style=\"background-color: greenyellow; padding: 5px 15px;border: 1px solid #3f3f3f; color:black ;border-radius: 8px;font-weight: 400;\">Chưa duyệt</p>";
+    } else if (id2 === "1") {
+        // eslint-disable-next-line no-param-reassign
+        stt.innerHTML = "<span style='background-color: #FFC107;padding: 5px 15px;border: 1px solid #3f3f3f; color:#000 ;border-radius: 8px; font-weight: 400;'>Đã duyệt</span>";
+    } else if (id2 === "2") {
+        // eslint-disable-next-line no-param-reassign
+        stt.innerHTML = "<span style='background-color: #17A2B8;padding: 5px 15px;border: 1px solid #3f3f3f; color:#fff ;border-radius: 8px; font-weight: 400;'>Đang giao</span>";
+    } else if (id2 === "3") {
+        // eslint-disable-next-line no-param-reassign
+        stt.innerHTML = "<span style='background-color: #28A544;padding: 5px 15px;border: 1px solid #3f3f3f; color:#fff ;border-radius: 8px; font-weight: 400;'>Đã giao</span>";
+    } else if (id2 === "4") {
+        // eslint-disable-next-line no-param-reassign
+        stt.innerHTML = "<span style='background-color: red;padding: 5px 15px;border: 1px solid #3f3f3f; color:#fff ;border-radius: 8px; font-weight: 400;'>Đã hủy đơn</span>";
+    }
+});
+}

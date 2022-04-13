@@ -41,7 +41,7 @@ const Cart = (props: CartProps) => {
       userInfomation: products.userInfomation,
       listproduct: items,
       cartTotal: cartTotal,
-      status: 0 
+      status: "0" 
     }).then(() => {
       alert("Mua hàng thành công")
     })

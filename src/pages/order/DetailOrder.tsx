@@ -1,35 +1,60 @@
 import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom'
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom'
 import { orderDetail } from '../../api/order';
 import { OrderType } from '../../types/products';
+// import { orderDetail } from '../../../api/order';
+// import { OrderType } from '../../../types/products';
 
-type Props = {}
-type FormInputs = {
-
-  userInfomation: {
-    id?: number
-    name?: string,
-    phone?: string,
-    address?: string,
-    specificaddress?:string,
-    noinhan?:string
-  }
+type DetailOrderProps = {
+  onUpdateOrder: (order: OrderType) => void
 }
-const DetailOrder = (props: Props) => {
+type FormInputs = {
+  _id?:number,
+    createdAt?:Date,
+    userInfomation: {
+        name?: string,
+        phone?: string,
+        address?: string,
+        specificaddress?:string,
+        noinhan?:string
+    },
+    listproduct: [
+        {
+            key?:number,
+            id?: string,
+            img?: string,
+            itemTotal?: number
+            price?: number,
+            name?: string,
+            quantity?: number,
+        }
+    ],
+    cartTotal: number,
+    status: string
+}
+const DetailOrder = ({onUpdateOrder}: DetailOrderProps) => {
   const [orders, setOrders] = useState<OrderType>();
   const {id} = useParams();
   const {register, handleSubmit, formState:{errors}, reset} = useForm<FormInputs>();
+  const navigate = useNavigate();
   useEffect(()=>{
     const getProduct2 = async (id:any) => {
       const {data} = await orderDetail(id);
-      console.log(data);
+      // console.log(data);
 
       setOrders(data);
-      
+      reset(data)
     }
     getProduct2(id);
   },[]);
+
+  const onSubmit: SubmitHandler<FormInputs> = async data => {
+    console.log(data._id);
+    await onUpdateOrder(data);
+    navigate('/admin/order');
+    
+  }
   return (
     <div>
 
@@ -39,7 +64,7 @@ const DetailOrder = (props: Props) => {
           
           {/* thong tin  order */}
           <h2 className="text-center p-3 mb-2 text-xl">Đơn hàng: {orders?._id}, Status: {orders?.status}</h2>
-          <form  method="POST">
+          <form  onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-12 gap-8 " style={{display:"grid" , gridTemplateColumns:"7fr 5fr", gap:"30px",}}>
               <div className="col-span-7 p-8 don_hang2" style={{padding:"32px"}}>
                 <p className="text-3xl font-bold" style={{fontSize:"18px", fontWeight:"600"}}>Thông tin giao hàng</p>
@@ -70,7 +95,7 @@ const DetailOrder = (props: Props) => {
                   </div>
                   <div>
                     <div className="float-right py-4 " style={{float:"right", padding:"16px 0"}}>
-                      <select name="confirmOrder" id="confirmOrder" className="mr-4 h-9 my-auto" style={{border: '1px solid #000', height:"32px", marginRight:"16px"}}>
+                      <select {...register("status", {required:true})} id="confirmOrder" className="mr-4 h-9 my-auto" style={{border: '1px solid #000', height:"32px", marginRight:"16px"}}>
                         <option value={1}>Duyệt</option>
                         <option value={2}>Giao hàng</option>
                         <option value={3}>Giao hàng thành công</option>
@@ -91,7 +116,7 @@ const DetailOrder = (props: Props) => {
                   {orders?.listproduct.map((item,index) => {
                     return(
                       <div className="dl_don_hang" key={index} style={{ display: "flex" }}>
-                        <div>
+                        <div> 
                           <div style={{ display: "flex" }}>
                             <p><img src={item.img} alt="" width={70} /></p>
                             <div>

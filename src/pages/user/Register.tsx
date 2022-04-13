@@ -27,7 +27,7 @@ type FormInputs = {
   username: string,
   email: string,
   password: string | number,
-  confirmPassword:string | number
+  confirmPassword:string | number,
 }
 
 
@@ -44,7 +44,8 @@ const Register = (props: RegisterProps) => {
       const {data} = await signUp({
         username: user.username,
         email: user.email,
-        password: user.password
+        password: user.password,
+        role: 0
       });
       console.log(data);
       alert("Đăng kí thanh công");

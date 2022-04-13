@@ -6,20 +6,11 @@ type Props = {}
 const Header = (props: Props) => {
   const navigate = useNavigate();
   const { isEmpty, totalUniqueItems, items, totalItems, cartTotal, updateItemQuantity, removeItem, emptyCart } = useCart();
-  const logout = () => {
-    const logout = document.querySelector("#logout");
-    if (logout) {
-      logout.addEventListener("click", () => {
-          const confirm = window.confirm("You want to sign out ?");
-          if (confirm) {
-              localStorage.removeItem("user");
-              // reRender(Header, "#header");
-              // toastr.success("Logout thành công");
-              navigate('/')
-          }
-      });
+
+  const handlerLogout = () => {
+    localStorage.removeItem("user");
   }
-  }
+ 
   return (
 
     <div>
@@ -38,16 +29,16 @@ const Header = (props: Props) => {
               <div className="userHover "><span><i className="fas fa-user mr-2" /></span>
                 <div className="menuUser">
                   <ul>
-                    <NavLink to="login?act=myAccount">
+                    <NavLink to="/myAccount">
                       <li className="px-3 py-1 float-left hoverVang">Tài khoản của tôi</li>
                     </NavLink>
-                    <NavLink to="" id="logout" onClick={() => logout()}>
+                    <NavLink to="" id="logout" onClick={() => handlerLogout()}>
                       <li className="px-3 py-1 float-left  hoverVang">Đăng xuất</li>
                     </NavLink>
                   </ul>
                 </div>
               </div>
-              :  <NavLink to="login" className="fas fa-user" > </NavLink>
+              :  <NavLink to="/login" className="fas fa-user" > </NavLink>
               }
             <NavLink to="" id="logout" className="text-xl"><i className="bx bx-log-out-circle bx-rotate-180" /></NavLink>
 
