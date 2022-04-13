@@ -806,10 +806,11 @@ html::-webkit-scrollbar-thumb{
 
 
 .hoverVang:hover{
-    color: #F4A851;
-    
+    color: #27AE60; 
 }
-
+.hoverVang a:hover{
+    color: #27AE60; 
+}
 
 
 

@@ -29,7 +29,7 @@ const Header = (props: Props) => {
               <div className="userHover "><span><i className="fas fa-user mr-2" /></span>
                 <div className="menuUser">
                   <ul>
-                    <NavLink to="/myAccount">
+                    <NavLink to={'/myAccount/'+JSON.parse(String(localStorage?.getItem("user"))).user._id}>
                       <li className="px-3 py-1 float-left hoverVang">Tài khoản của tôi</li>
                     </NavLink>
                     <NavLink to="" id="logout" onClick={() => handlerLogout()}>

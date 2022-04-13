@@ -19,7 +19,11 @@ export type UserType = {
     username?: String,
     email: String,
     password?: string | number,
-    role?: number
+    phone?:string,
+    address?:string,
+    img?:string,
+    role?: number,
+    sex?:number
 }
 
 export type CategoryType = {

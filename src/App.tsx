@@ -142,15 +142,21 @@ function App() {
     setCategories(categories.map(item => item._id === data._id ? data : item ));
   }
   const onUpdatUser = async (user:UserType) => {
+    console.log();
+    
     const {data} = await updateUser({
       _id: user._id,
       username: user.username,
       email: user.email,
       role: user.role,
-      password: user.password
+      password: user.password,
+      phone:user.phone,
+      address: user.address,
+      img: user.img[0].name,
+      sex:user.sex
   });
     // const {data} = await updateUser();
-    console.log(user);
+    console.log(data);
     
     setUsers(users.map(item => item._id === data._id ? data : item))
   }
@@ -171,7 +177,7 @@ function App() {
               <Route path="product" element={<ProductPage/>}/>
               <Route path="about" element={<AboutPage/>}/>
               <Route path="/detail/:id" element={<DetailProduct />} /> 
-              <Route path="/myAccount" element={<MyAccount/>}/>
+              <Route path="/myAccount/:id" element={<MyAccount onUpdateUser={onUpdatUser}/>}/>
             </Route>
 
             <Route path="/shop" element={<WebsiteLayout/>}>

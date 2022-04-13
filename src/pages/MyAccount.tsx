@@ -1,9 +1,54 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Navigate, NavLink, useNavigate, useParams } from 'react-router-dom'
+import { getUserById } from '../api/user';
+import { UserType } from '../types/products';
 
-type Props = {}
+type Props = {
+  onUpdateUser: (user:UserType) => void
+}
 
-const MyAccount = (props: Props) => {
+type FormInputs = {
+  username:string,
+  email:string,
+  price:number,
+  category: number,
+  img:string,
+  phone:string,
+  address:string,
+  salt:string,
+  sex:number
+}
+
+const MyAccount = ({onUpdateUser}: Props) => {
+  const [users, setUsers] = useState<UserType>();
+  const {register, handleSubmit, formState:{errors}, reset} = useForm<FormInputs>();
+  const {id} = useParams();
+  const navigate = useNavigate();
+  useEffect(()=>{
+    const getProduct2 = async (id:any) => {
+      const {data} = await getUserById(id);
+      // console.log(data);
+      
+      setUsers(data);
+      reset(data)
+    }
+    getProduct2(id);
+  },[]);
+
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    // console.log(String(data.img[0].name));
+     await onUpdateUser(data);
+    
+    // navite('/admin/product');
+      alert("Update thành công");
+      navigate('/myAccount/'+id);
+    
+  
+    
+  }
+
+
   return (
     <div>
       <div className="" style={{ backgroundColor: '#EBEDF5' }}>
@@ -11,11 +56,11 @@ const MyAccount = (props: Props) => {
           <div className="row grid grid-cols-12" style={{display:"grid", gridTemplateColumns:"2fr 8fr"}}>
             <div className="col col-span-2 ">
               <div className="flex" style={{display:"flex"}}>
-                <span className="my-auto" style={{margin:"auto 0"}}><i className="far fa-user-circle text-5xl font-thin" /></span>
-                <p className="ml-4" style={{marginLeft:"16px",margin:"auto 10px"}}>Vũ Tiến Long</p>
+                <span className="my-auto" style={{margin:"auto 0"}}><img src={'../image/'+users?.img} width={40} style={{borderRadius:"100%"}} /></span>
+                <p className="ml-4" style={{marginLeft:"16px",margin:"auto 10px"}}>{users?.username}</p>
               </div>
               <div className="flex mt-8" style={{display:"flex", marginTop:"32px"}}>
-                <span><i className="far fa-user"/></span>
+                <span className="hoverVang"><i className="far fa-user"/></span>
                 <div className="ml-2" style={{marginLeft:"8px"}}>
                   <ul>
                     <li className="hoverVang"><NavLink to="login?act=myAccount">Tài khoản của tôi</NavLink></li>
@@ -47,36 +92,37 @@ const MyAccount = (props: Props) => {
                 <p className="text-2xl" style={{ color: '#27AE60', fontSize: "22px" }}>Hồ sơ của tôi</p>
                 <p className="mb-3">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
                 <hr /> 
-                <form method="POST" className="grid grid-cols-12" style={{ display: "grid", gridTemplateColumns:"8fr 4fr" }} encType="multipart/form-data">
+                <form onSubmit={handleSubmit(onSubmit)}  className="grid grid-cols-12" style={{ display: "grid", gridTemplateColumns:"8fr 4fr" }} encType="multipart/form-data">
                   <div className="mt-8 col-span-8 p-8 " style={{ borderRight: "1px solid #ddd", marginTop: "32px", padding: "32" }}>
-                    <div className="mb-4 flex" style={{ marginBottom: "16px", display: "flex" }}>
-                      <p>Tên đăng nhập:</p>
-                      <input className="border ml-2 w-4/5  p-1" style={{ border: "1px solid #ddd", marginLeft: "8px", width:"70%",float:"left", padding: "4px" }} type="text" defaultValue="<?php if (isset($username)) echo $username; ?>" readOnly />
-                    </div>
+                   
                     <div className="mb-4" style={{ marginBottom: "16px" }}>
                       <label htmlFor="hoten">Tên</label>
-                      <input className="border   w-4/5 p-1" style={{ border: "1px solid #ddd", padding: "4px", width:"70%", marginLeft: "93px" }} type="text" name="hoten" defaultValue="<?php if (isset($hoten)) echo $hoten; ?>" />
+                      <input  style={{ border: "1px solid #ddd", padding: "4px", width:"70%", marginLeft: "93px", textTransform:"none" }} type="text"  {...register('username', {required:true})} />
                     </div>
                     <div className="mb-4" style={{ marginBottom: "16px" }}>
                       <label htmlFor="email">Email</label>
-                      <input className="border ml-16  w-4/5 p-1" style={{ border: "1px solid #ddd", marginLeft: "80px", width:"70%", padding: "4px" }} name="email" type="email" defaultValue="<?php if (isset($email)) echo $email; ?>" />
+                      <input  style={{ border: "1px solid #ddd", marginLeft: "80px", width:"70%", padding: "4px", textTransform:"none" }} type="email" {...register('email', {required:true})}/>
                     </div>
                     <div className="mb-4" style={{ marginBottom: "16px" }}>
                       <label htmlFor="phone">Số điện thoại</label>
-                      <input className="border ml-4 w-4/5  p-1" style={{ border: "1px solid #ddd", marginLeft: "30px", width:"70%", padding: "4px" }} name="phone" type="text" defaultValue="<?php if (isset($phone)) echo $phone; ?>" />
+                      <input className="border ml-4 w-4/5  p-1" style={{ border: "1px solid #ddd", marginLeft: "30px", width:"70%", padding: "4px", textTransform:"none" }} type="text" {...register('phone', {required:true})} />
                     </div>
                     <div className="mb-4" style={{ marginBottom: "16px" }}>
                       <label htmlFor="diachi">Địa chỉ</label>
-                      <input className="border p-1 w-4/5" type="text" style={{ border: "1px solid #ddd", marginLeft: "70px", width:"70%", padding: "4px" }} name="diachi" defaultValue="<?php if (isset($diachi)) echo $diachi; ?>" />
+                      <input className="border p-1 w-4/5" type="text" style={{ border: "1px solid #ddd", marginLeft: "70px", width:"70%", padding: "4px", textTransform:"none" }} {...register('address', {required:true})} />
                     </div>
                     <div className="mb-4 flex" style={{ marginBottom: "16px", display: "flex" }}>
-                      <label htmlFor="gioi_tinh">Giới tính</label>
-                      <div style={{ marginLeft: 60 }}>
+                      <label htmlFor="gioi_tinh" >Giới tính</label>
+                      <select style={{border:"1px #ddd solid",marginLeft: 60}} {...register('sex')} id="fruit">
+                          <option value="1">Nam</option>
+                          <option value="2">Nữ</option>
+                      </select>
+                      {/* <div style={{ marginLeft: 60 }}>
                         <input type="radio" name="gioi_tinh" defaultValue="Nam" checked />
                         <label htmlFor="Nam">Nam</label>
                         <input className="ml-4" type="radio" style={{ marginLeft: "16px" }} name="gioi_tinh" defaultValue="Nữ" />
                         <label htmlFor="Nữ">Nữ</label>
-                      </div>
+                      </div> */}
                     </div>
                     <div>
                       <button type="submit" name="btn_update_user" className="py-1 px-4 ml-24" style={{ backgroundColor: '#27AE60', color: "#fff" }}>Lưu</button>
@@ -84,8 +130,8 @@ const MyAccount = (props: Props) => {
                     </div>
                   </div>
                   <div className="col-span-4 p-16" style={{ padding:"10px 10px", margin:"auto", textAlign:"center" }}>
-                    <img className="mb-4" src="../image/book-1.png" width={130} />
-                    <p><input type="file" name="hinh_anh" /></p>
+                    <img className="mb-4" src={'../image/'+users?.img}  width={130} style={{borderRadius:"100%"}} />
+                    <p><input type="file"  {...register('img')}/></p>
                   </div>
                 </form>
               </div>
