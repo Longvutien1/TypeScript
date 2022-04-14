@@ -1,10 +1,13 @@
+import toastr from "toastr";
 import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { CategoryType, ProductType } from '../types/products'
 import { List, Card, Image, Button, Select } from 'antd';
-import { getProductByName, top10Product } from '../api/products';
+import { getProductByName, list, listProductSortHigh, listProductSortLow, top10Product } from '../api/products';
 import { listProductByCategory } from '../api/category';
 import { Option } from 'antd/lib/mentions';
+
+import "toastr/build/toastr.min.css";
 // import { searchByName } from '../utils/upload';
 import { CartProvider, useCart } from "react-use-cart";
 type ShopProps = {
@@ -19,9 +22,21 @@ const Shop =  ({fullProduct, listCategory}: ShopProps) => {
   const [productsTop10, setProductTop10] = useState<ProductType[]>([]);
   const { Option } = Select;
   const { addItem } = useCart();
-function handleChange(value:any) {
-  console.log(`selected ${value}`);
-}
+
+  const handleChange = async (value:any) => {
+    console.log(`selected ${value}`);
+    if (value == "thap") {
+      // console.log("đang ở thấp");
+     const {data} =  await  listProductSortLow();
+      setProducts(data);
+    }else if (value == "cao") {
+      const {data} =  await  listProductSortHigh();
+      setProducts(data);
+    }else{
+      const {data} =  await  list();
+      setProducts(data);
+    }
+  }
   const {id} = useParams();
   var dataSourd = [] ;
   
@@ -39,15 +54,18 @@ function handleChange(value:any) {
  }, [fullProduct])
 
 
-  
-
 const searchByName =  () => {
   const search = document.querySelector("#search"); 
     const getSearch = async (search:any) => {
       const {data} = await getProductByName(search.value); 
-      // console.log(data);
-     
+      console.log(data.length);
+      
       setProducts(data)
+      if (data.length == 0) {
+        toastr.error("Không tìm thấy sản phẩm nào");
+      }else{
+        toastr.success("Tìm thấy "+ data.length +" sản phẩm")
+      }
     }
     getSearch(search);
  }
@@ -149,8 +167,8 @@ const searchByName =  () => {
     <h4 className="italic text-3xl text-center text-red-200" style={{marginTop:"17px"}}>Sản Phẩm Của Chúng Tôi</h4>
     <Select defaultValue="all" style={{ width: 150 , marginBottom: 20}} onChange={handleChange}>
       <Option value="all">All</Option>
-      <Option value="lucy">Cao xuống thấp</Option>
-      <Option value="Yiminghe">Thấp tới cao</Option>
+      <Option value="cao">Cao xuống thấp</Option>
+      <Option value="thap">Thấp tới cao</Option>
     </Select>
     {/* <div id="product" className="product-shop sm:grid sm:grid-cols-1 sm:grid sm:grid-cols-2 lg:grid lg:grid-cols-3 gap-8 mt-8 "> */}
     <List

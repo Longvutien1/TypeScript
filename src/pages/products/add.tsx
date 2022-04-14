@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { message, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import axios from 'axios';
+import toastr from "toastr";
 import { changImage, uploadImg } from '../../utils/upload';
 type AddProductProps = {
     listCategory: CategoryType[],
@@ -37,6 +38,7 @@ const AddProduct = ({listCategory, onAdd}: AddProductProps) => {
       const imgPost = document.querySelector("#file-upload");
       const imgLink = await uploadImg(imgPost);
            console.log(imgLink);
+           try {
             if (imgLink) {
               onAdd({
                 name: product.name,
@@ -44,9 +46,16 @@ const AddProduct = ({listCategory, onAdd}: AddProductProps) => {
                 img: imgLink,
                 category: product.category
               })
-              await navigate('/admin/product')
-            }      
-     
+              toastr.success("Thêm sản phẩm thành công");
+              
+              setTimeout(() => {
+                 navigate('/admin/product')
+              }, 1000); 
+            }  
+           } catch (error:any) {
+              toastr.error(error.response.data);
+           }    
+            
         console.log(product);
 
         //  console.log(product);

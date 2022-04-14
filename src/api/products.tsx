@@ -21,6 +21,15 @@ export const list = () => {
 
 }
 
+export const listProductSortHigh = () => {
+    const url = '/products?_sort=price&_order=desc';
+    return instance.get(url);
+}
+export const listProductSortLow = () => {
+    const url = '/products?_sort=price&_order=asc';
+    return instance.get(url);
+}
+
 export const top10Product = () => {
     const url = '/products?_sort=price&_order=desc&_limit=5';
     return instance.get(url);
