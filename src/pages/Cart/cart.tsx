@@ -24,6 +24,8 @@ type FormInputs = {
 const Cart = (props: CartProps) => {
   const { isEmpty, totalUniqueItems, items, totalItems, cartTotal, updateItemQuantity, removeItem, emptyCart } = useCart();
   const { register, handleSubmit, formState } = useForm<FormInputs>();
+  console.log(items);
+  
   useEffect(() => {
     // thanh toán
     const btnThanhToan = document.querySelector(".btn_thanh_toan");

@@ -16,7 +16,28 @@ const DetailProduct = (prop: DetailProductProps) => {
     const [products, setProduct] = useState<ProductType>();
     const [productCate, setProductCate] = useState<ProductType[]>([]);
     const { addItem } = useCart();
- 
+    // const data2 = {
+    //   id: String(products?._id),
+    //   img:products?.img,
+    //   key:products?._id,
+    //   name:products?.name,
+    //   price:Number(products?.price),
+    //   quantity:1,
+    // }
+    const abc = (aa:any) => {
+      const  quantity2=   document.querySelector(aa).value;
+      console.log(quantity2);
+      
+        return ({
+          id: String(products?._id),
+          img:products?.img,
+          key:products?._id,
+          name:products?.name,
+          price:Number(products?.price),
+          quantity: quantity2,
+        })
+    }
+
     const data = [
       {
         title: 'Ant Design Title 1',
@@ -82,7 +103,7 @@ const DetailProduct = (prop: DetailProductProps) => {
       listProductByCate(id);
      
      }
-     console.log(products);
+    //  console.log(products);
      
      
   return (
@@ -117,7 +138,7 @@ const DetailProduct = (prop: DetailProductProps) => {
           </div>
           <div className="buttons">
             <a href="#" className="buy">buy now</a>
-            <button  className="cart" onClick={() => addItem(products)} id="btnAddToCart">add to cart</button>
+            <button  className="cart" style={{border:"1px solid #ddd", padding:"6px 10px", background:"#27AE60", color:"#fff"}} onClick={() => addItem(abc("#quantityProduct"))} id="btnAddToCart">Add to cart</button>
           </div>
         </div>
       </section>

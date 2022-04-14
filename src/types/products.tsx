@@ -1,5 +1,5 @@
 export type ProductType = {
-    _id?: Number,
+    _id?: number ,
     name: String,
     price: Number,
     img: string,
@@ -8,21 +8,20 @@ export type ProductType = {
     createdAt?: Date,
     __v?: number,
   
-
     itemTotal?: number,
     quantity?: number,
 
 }
 
 export type UserType = {
-    _id?: Number,
+    _id?: number,
     username?: String,
     email: String,
     password?: string | number,
     phone?:string,
     address?:string,
     img?:string,
-    role?: number,
+    role?: string,
     sex?:number
 }
 

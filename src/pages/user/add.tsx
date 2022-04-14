@@ -32,7 +32,7 @@ type FormInputs = {
     email:string,
     password: string,
     confirmPassword:string,
-    role?:number
+    role?:string
 }
 const AddUser = ({onAddUser}: AddUserProps) => {
     const {register, handleSubmit, formState ,reset} = useForm<FormInputs>(validation);
@@ -42,17 +42,19 @@ const AddUser = ({onAddUser}: AddUserProps) => {
     const onSubmit: SubmitHandler<FormInputs> = async (user:UserType) => {
         console.log(user);
         try {
-             onAddUser({
+            const signin = await onAddUser({
                 username: user.username,
                 email: user.email,
                 password: user.password,
                 role: user.role
             })
-            alert("Add user successfully");
-             navigate('/admin/user')
-
+           
+            // setTimeout(() => {
+            //     navigate('/admin/user')
+            // }, 1000); 
+            
         } catch (error) {
-            alert("Username is exist")
+            
         }
     }
   return (
@@ -61,13 +63,13 @@ const AddUser = ({onAddUser}: AddUserProps) => {
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">
                 <label htmlFor="exampleInputUser" className="form-label">Username:</label>
-                <input type="text" {...register('username')} className="form-control" style={{fontSize:'13px'}} id="exampleInputUser" placeholder='Username'  />
+                <input type="text" {...register('username')} className="form-control" style={{fontSize:'13px',textTransform:"none"}} id="exampleInputUser" placeholder='Username'  />
                 <div className="red">{errors.username?.message}</div>
             </div>
 
             <div className="mb-3">
                 <label htmlFor="exampleInputEmail" className="form-label">Email:</label>
-                <input type="email" {...register('email')} className="form-control" style={{fontSize:'13px'}} id="exampleInputEmail" placeholder='abc@gmail.com' />
+                <input type="email" {...register('email')} className="form-control" style={{fontSize:'13px', textTransform:"none"}} id="exampleInputEmail" placeholder='abc@gmail.com' />
                 <div className="red">{errors.email?.message}</div>
             </div>
 
@@ -85,8 +87,8 @@ const AddUser = ({onAddUser}: AddUserProps) => {
 
             <div className="mb-3">
                 <select style={{border:"1px #ddd solid"}} {...register('role')} id="fruit">
-                    <option value="1">User</option>
-                    <option value="2">Admin</option>
+                    <option value="0">User</option>
+                    <option value="1">Admin</option>
                 </select>
                 <div className="red">{errors.role?.message}</div>
             </div>

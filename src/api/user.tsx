@@ -22,7 +22,7 @@ export const getUserById = (id:Number) => {
 }
 
 export const addUser = (user:UserType) => {
-    const url = `/users`;
+    const url = `/signup`;
     return instance.post(url, user);
 }
 export const updateUser = (user:UserType) => {

@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addUser, getUserById, updateUser } from '../../api/user';
 import { UserType } from '../../types/products';
-
+import toastr from "toastr";
 
 type EditUserProps = {
     onUpdateUser: (user:UserType) => void
@@ -25,7 +25,7 @@ type FormInputs = {
     username: string,
     email:string,
     password: string,
-    role?:number
+    role?:string
 }
 const EditUser = ({onUpdateUser}: EditUserProps) => {
     const {register, handleSubmit, formState, reset} = useForm<FormInputs>(validation);
@@ -59,8 +59,12 @@ const EditUser = ({onUpdateUser}: EditUserProps) => {
                 role: user.role,
             }
             );
-            
-        navigate('/admin/user')
+            toastr.success("Update Successfully");
+              
+            setTimeout(() => {
+                navigate('/admin/user')
+            }, 1000); 
+       
     }
   return (
     <div>
@@ -84,8 +88,8 @@ const EditUser = ({onUpdateUser}: EditUserProps) => {
         
             <div className="mb-3">
                 <select style={{border:"1px #ddd solid"}} {...register('role')} id="fruit">
-                    <option value="1">User</option>
-                    <option value="2">Admin</option>
+                    <option value="0">User</option>
+                    <option value="1">Admin</option>
                 </select>
             </div>
           

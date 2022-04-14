@@ -14,7 +14,7 @@ const UserManager = ({users, onRemoveUser}: UserManagerProps) => {
     {title: 'STT', dataIndex: 'stt', key:'stt'},
     {title: 'Username', dataIndex: 'username', key:'username'},
     {title: 'Email', dataIndex: 'email', key:'email'},
-    {title: 'Password', dataIndex: 'password', key:'password'},
+   
     {title: 'Role', dataIndex: 'role', key:'role'},
     {
       title: 'Action',
@@ -36,8 +36,7 @@ const UserManager = ({users, onRemoveUser}: UserManagerProps) => {
       stt: index + 1,
       username: item.username,
       email: item.email,
-      password:item.password,
-      role: item.role == 1 ? "User" : "Admin",
+      role: item.role == "0" ? "User" : "Admin",
       id: item._id 
     }
   })

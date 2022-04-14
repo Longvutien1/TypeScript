@@ -3,6 +3,7 @@ import { useForm, SubmitHandler} from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import { CategoryType } from '../../types/products';
+import toastr from "toastr";
 type AddCategoryProps = {
     onAddCategory: (category: CategoryType) => void
 }
@@ -17,9 +18,14 @@ const AddCategory = (props: AddCategoryProps) => {
     const onSubmit: SubmitHandler<FormInputs> = async (data) =>{
         await props.onAddCategory(data);
          console.log(data);
-         
-         navigate('/admin/category')
+
+         toastr.success("Thêm sản phẩm thành công");
+       
+         setTimeout(() => {
+            navigate('/admin/category')
+         }, 1000); 
     }
+    
   return (
     <div>
         <h1>Add Category</h1>

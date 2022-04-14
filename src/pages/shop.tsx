@@ -186,7 +186,6 @@ const searchByName =  () => {
           
           <Card key={item.id} title={<Image width={150} style={{textAlign:"center"}}  src={item.img} />}>
               <p>{item.name}   <p> ${item.price}</p></p>
-            
               <button  data-id="${item.id}" className="btn" onClick={() => addItem(item)} id="btnAddToCart">add to cart</button>
           </Card>
         </List.Item>

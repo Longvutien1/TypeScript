@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getCategoryById } from '../../api/category'
-import { CategoryType } from '../../types/products'
+import { CategoryType } from '../../types/products';
+import toastr from "toastr";
 // import { getProductById, list } from '../../api/products'
 // import { ProductType } from '../../types/products'
 
@@ -35,8 +36,11 @@ const EditCategory = ({onUpdateCategory}: EditCategoryProps) => {
   const onSubmit: SubmitHandler<FormInputs> = async data => {
     // console.log(data);
     await onUpdateCategory(data);
-    navigate('/admin/category');
-    
+    toastr.success("Update Successfully");
+              
+    setTimeout(() => {
+       navigate('/admin/category')
+    }, 1000); 
   }
   return (
     <div>

@@ -5,7 +5,7 @@ import { orderDetail } from '../../api/order';
 import { OrderType } from '../../types/products';
 // import { orderDetail } from '../../../api/order';
 // import { OrderType } from '../../../types/products';
-
+import toastr from "toastr";
 type DetailOrderProps = {
   onUpdateOrder: (order: OrderType) => void
 }
@@ -52,9 +52,14 @@ const DetailOrder = ({onUpdateOrder}: DetailOrderProps) => {
   const onSubmit: SubmitHandler<FormInputs> = async data => {
     console.log(data._id);
     await onUpdateOrder(data);
-    navigate('/admin/order');
-    
+   
+    toastr.success("Update Successfully");
+              
+    setTimeout(() => {
+      navigate('/admin/order');
+    }, 1000); 
   }
+  
   return (
     <div>
 
@@ -81,18 +86,22 @@ const DetailOrder = ({onUpdateOrder}: DetailOrderProps) => {
                     <p>Địa chỉ: </p>
                     <p>{orders?.userInfomation.address}</p>
                   </div>
+
                   <div  style={{display:"flex", justifyContent:"space-between", marginTop:"16px",borderBottom: '1px solid #ddd'}}>
                     <p>Địa chỉ cụ thể: </p>
                     <p>{orders?.userInfomation.specificaddress}</p>
                   </div>
+
                   <div  style={{display:"flex", justifyContent:"space-between", marginTop:"16px",borderBottom: '1px solid #ddd'}}>
                     <p>Loại địa chỉ: </p>
                     <p>{orders?.userInfomation.noinhan === "Home" ? "Nhà riêng" : "Văn phòng"}</p>
                   </div>
+
                   <div  style={{display:"flex", justifyContent:"space-between", marginTop:"16px",borderBottom: '1px solid #ddd'}}>
                     <p>Ngày mua: </p>
                     <p>{orders?.createdAt}</p>
                   </div>
+
                   <div>
                     <div className="float-right py-4 " style={{float:"right", padding:"16px 0"}}>
                       <select {...register("status", {required:true})} id="confirmOrder" className="mr-4 h-9 my-auto" style={{border: '1px solid #000', height:"32px", marginRight:"16px"}}>

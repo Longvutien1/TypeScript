@@ -33,6 +33,7 @@ import { addOrder, listOrder, removeOrder, updateOrder } from './api/order';
 import OrderManager from './pages/order/OrderManager';
 import DetailOrder from './pages/order/DetailOrder';
 import MyAccount from './pages/MyAccount';
+import toastr from "toastr";
 // import OrderManager from './pages/layouts/order/OrderManager';
 // import DetailOrder from './pages/layouts/order/DetailOrder';
 function App() {
@@ -78,12 +79,17 @@ function App() {
   const removeItem = async (id:number) => {
     // xóa trên api
     await remove(id);
+    toastr.success("Deltete Successfully");
+
     // reRender
-     setProducts(products.filter(item => item._id !== id))
+    setProducts(products.filter(item => item._id  !== id))
+   
+    
   }
   const onRemoveUser = async (id:number) => {
     // xóa trên api
     await removeUser(id)
+    toastr.success("Deltete Successfully");
     // reRender
     setUsers(users.filter(item => item._id !== id))
   }
@@ -91,6 +97,7 @@ function App() {
   const onRemoveCategory = async (id:number) => {
     // xóa trên api
     await removeCategory(id)
+    toastr.success("Deltete Successfully");
     // reRender
     setCategories(categories.filter(item => item._id !== id))
   }
@@ -98,6 +105,7 @@ function App() {
   const onRemoveOrder = async (id:number) => {
     // xóa trên api
     await removeOrder(id)
+    toastr.success("Deltete Successfully");
     // reRender
     setOrders(orders.filter(item => item._id !== id))
   }
@@ -120,7 +128,12 @@ function App() {
     console.log(user);
     const {data} = await addUser(user);
     console.log(data);
-    
+    if (data.message) {
+      alert(data.message)
+    }else{
+        toastr.success("Add Successfully");
+        // navigate('/');
+    }
     setUsers([...users, data.user])
   }
 
@@ -161,6 +174,22 @@ function App() {
     setUsers(users.map(item => item._id === data._id ? data : item))
   }
 
+  const onUpdatUserAdmin = async (user:UserType) => {
+    // console.log();
+    
+    const {data} = await updateUser({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      password: user.password
+  });
+    // const {data} = await updateUser();
+    // console.log(data);
+    
+    setUsers(users.map(item => item._id === data._id ? data : item))
+  }
+
   const onUpdateOrder = async (order:OrderType) => {
     const {data} = await updateOrder(order);
 
@@ -176,7 +205,7 @@ function App() {
               <Route index element={<HomePage data={products} />}/>
               <Route path="product" element={<ProductPage/>}/>
               <Route path="about" element={<AboutPage/>}/>
-              <Route path="/detail/:id" element={<DetailProduct />} /> 
+              <Route path="/detail/:id" element={<CartProvider><DetailProduct /></CartProvider>} /> 
               <Route path="/myAccount/:id" element={<MyAccount onUpdateUser={onUpdatUser}/>}/>
             </Route>
 
@@ -198,7 +227,7 @@ function App() {
                 <Route path="product" >
                   <Route index element={<ProductManager products={products}  onRemove={removeItem} />}/>
                   <Route path="add" element={<AddProduct listCategory={categories} onAdd={onHandleAdd}/>}/>
-                  <Route path="edit/:id" element={<EditProduct onUpdate={onHandlerUpdate}/>}/>
+                  <Route path="edit/:id" element={<EditProduct listCategory={categories} onUpdate={onHandlerUpdate}/>}/>
     
                 </Route>
               
@@ -206,7 +235,7 @@ function App() {
                 <Route path='user'>
                   <Route index element={<UserManager users={users} onRemoveUser={onRemoveUser}/>} />
                   <Route path='add' element={<AddUser onAddUser={onHandlerUser}/>}/>
-                  <Route path="edit/:id" element={<EditUser onUpdateUser={onUpdatUser}/>}/>
+                  <Route path="edit/:id" element={<EditUser onUpdateUser={onUpdatUserAdmin}/>}/>
 
                 </Route>
 

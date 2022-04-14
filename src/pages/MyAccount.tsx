@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate, NavLink, useNavigate, useParams } from 'react-router-dom'
 import { getUserById } from '../api/user';
 import { UserType } from '../types/products';
-
+import toastr from "toastr";
 type Props = {
   onUpdateUser: (user:UserType) => void
 }
@@ -41,9 +41,13 @@ const MyAccount = ({onUpdateUser}: Props) => {
      await onUpdateUser(data);
     
     // navite('/admin/product');
-      alert("Update thành công");
-      navigate('/myAccount/'+id);
-    
+      // alert("Update thành công");
+     
+      toastr.success("Update Successfully");
+      
+      setTimeout(() => {
+        navigate('/myAccount/'+id);
+      }, 1000); 
   
     
   }
