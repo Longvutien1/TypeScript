@@ -55,3 +55,30 @@ export type OrderType = {
     status: string
 
 }
+
+
+export type CommentType = {
+    _id?: Number,
+    comment: String,
+    userInfomation: {
+        name?: string,
+        phone?: string,
+        address?: string,
+        specificaddress?:string,
+        noinhan?:string
+    },
+    product?: {
+        _id?: number ,
+        name: String,
+        price: Number,
+        img: string,
+        category?: number,
+        updatedAt?: Date,
+        createdAt?: Date,
+        __v?: number,
+      
+        itemTotal?: number,
+        quantity?: number,
+        }
+    ,
+}

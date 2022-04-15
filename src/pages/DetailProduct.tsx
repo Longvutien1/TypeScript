@@ -1,29 +1,30 @@
 import { Avatar, List } from 'antd';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Swiper from 'swiper';
 import { listProductByCategory } from '../api/category';
 import { getProductById } from '../api/products';
 import Footer from '../components/footer';
-import { ProductType } from '../types/products';
+import { CommentType, ProductType } from '../types/products';
 import { CartProvider, useCart } from "react-use-cart";
+import { SubmitHandler, useForm } from 'react-hook-form';
+import toastr from "toastr";
 type DetailProductProps = {
-  // listCategory: ProductType[]
+  onAddComment: (comment:CommentType) => void,
+  listComment : CommentType[]
+}
+type FormInputs = {
+  comment: string
 }
 
-const DetailProduct = (prop: DetailProductProps) => {
+const DetailProduct = ({ listComment, onAddComment}: DetailProductProps) => {
     const {id} = useParams();
     const [products, setProduct] = useState<ProductType>();
     const [productCate, setProductCate] = useState<ProductType[]>([]);
     const { addItem } = useCart();
-    // const data2 = {
-    //   id: String(products?._id),
-    //   img:products?.img,
-    //   key:products?._id,
-    //   name:products?.name,
-    //   price:Number(products?.price),
-    //   quantity:1,
-    // }
+    const { register, handleSubmit, formState} = useForm<FormInputs>();
+    const navigate = useNavigate();
+    
     const abc = (aa:any) => {
       const  quantity2=   document.querySelector(aa).value;
       console.log(quantity2);
@@ -91,20 +92,37 @@ const DetailProduct = (prop: DetailProductProps) => {
     swiper2
       
     }, [id])
-    // console.log(productCate);
           
-    if (id) {
+    // if (id) {
 
-      const listProductByCate = async (_id:any) => {
-        const {data} = await listProductByCategory(products?.category);
+      // const listProductByCate = async (_id:any) => {
+      //   const {data} = await listProductByCategory(products?.category);
         
-        setProductCate(data.products);
-      }  
-      listProductByCate(id);
+      //   setProductCate(data.products);
+      // }  
+      // listProductByCate(id);
      
-     }
-    //  console.log(products);
-     
+    //  }
+    console.log(listComment);
+    
+    const onSubmit: SubmitHandler<FormInputs> = async (comment) =>{
+      console.log(comment);
+      // console.log( JSON.parse(String(localStorage.getItem("user"))).user);
+      const userInFo = JSON.parse(String(localStorage.getItem("user"))).user;
+
+        await onAddComment({
+          comment: comment.comment,
+          userInfomation: userInFo,
+          product:products
+        })
+
+        toastr.success("Bình luận phẩm thành công");
+              
+        setTimeout(() => {
+           navigate('/detail/'+id)
+          //  navigate('/myAccount/'+id);
+        }, 1000); 
+    }
      
   return (
    <div className='detailProduct'>
@@ -149,22 +167,22 @@ const DetailProduct = (prop: DetailProductProps) => {
 
         <List
           itemLayout="horizontal"
-          dataSource={data}
+          dataSource={listComment}
           renderItem={item => (
             <List.Item>
               <List.Item.Meta
                 avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                title={<a href="https://ant.design">{item.title}</a>}
-                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                title={<a href="https://ant.design">{item.userInfomation.username}</a>}
+                description={item.comment}
               />
             </List.Item>
           )}
         />
 
           
-        {JSON.parse(localStorage.getItem("user") as string)  ?  <form id="formComment" style={{border: '1px solid #E8E8E8', backgroundColor: '#E8E8E8', padding: '5px 10px'}}>
+        {JSON.parse(localStorage.getItem("user") as string)  ?  <form onSubmit={handleSubmit(onSubmit)} id="formComment" style={{border: '1px solid #E8E8E8', backgroundColor: '#E8E8E8', padding: '5px 10px'}}>
        
-          <input type="text" name="commentInput" id="commentInput" style={{border:"1px solid", width:"100%"}} className="shadow-sm border-solid px-2 py-1 w-full mt-1 border focus:ring-indigo-500 focus:border-indigo-500 flex-1 block  rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="Comment's here" />
+          <input type="text" id="commentInput" {...register("comment", {required:true})} style={{border:"1px solid", width:"100%"}} className="shadow-sm border-solid px-2 py-1 w-full mt-1 border focus:ring-indigo-500 focus:border-indigo-500 flex-1 block  rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="Comment's here" />
         </form>
          : <p style={{color: 'red', background: '#ddd', padding: '5px 10px'}}>Đăng nhập để bình luận về sản phẩm này</p>
         

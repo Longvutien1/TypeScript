@@ -9,7 +9,7 @@ import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import AdminLayout from './pages/layouts/AdminLayout';
 import DetailProduct from './pages/DetailProduct';
 import { useEffect, useState } from 'react';
-import { CategoryType, OrderType, ProductType, UserType } from './types/products';
+import { CategoryType, CommentType, OrderType, ProductType, UserType } from './types/products';
 import { addProduct, list, remove, update } from './api/products';
 import Login from './pages/user/login';
 import ProductManager from './pages/products/ProductManager';
@@ -28,12 +28,14 @@ import EditCategory from './pages/category/edit';
 import Shop from './pages/shop';
 import Cart from './pages/Cart/cart';
 import {CartProvider} from 'react-use-cart'
-import CartManager from './pages/Cart/CartManager';
+// import CartManager from './pages/Cart/CartManager';
 import { addOrder, listOrder, removeOrder, updateOrder } from './api/order';
 import OrderManager from './pages/order/OrderManager';
 import DetailOrder from './pages/order/DetailOrder';
 import MyAccount from './pages/MyAccount';
 import toastr from "toastr";
+import { addComment, listComment } from './api/comment';
+// import { addComment, listComment } from './api/comment';
 // import OrderManager from './pages/layouts/order/OrderManager';
 // import DetailOrder from './pages/layouts/order/DetailOrder';
 function App() {
@@ -41,6 +43,7 @@ function App() {
   const [users, setUsers] = useState<UserType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [orders, setOrders] = useState<OrderType[]>([]);
+  const [comments, setComment] = useState<CommentType[]>([]);
   useEffect(() => {
         // get product
     const getProduct = async () => {
@@ -73,6 +76,11 @@ function App() {
     }
     getOrders();
 
+    const getComments = async () => {
+      const { data } = await listComment();
+      setComment(data);
+    }
+    getComments();
   },[])
   
 
@@ -143,6 +151,11 @@ function App() {
     
     setCategories([...categories, data])
   }
+  
+  const onAddComment = async (comment:CommentType) => {
+    const {data} = await addComment(comment);
+    setCategories([...comments, data])
+  }
 
   const onHandlerUpdate = async (product:ProductType) => {
     const {data} = await update(product);
@@ -205,7 +218,7 @@ function App() {
               <Route index element={<HomePage data={products} />}/>
               <Route path="product" element={<ProductPage/>}/>
               <Route path="about" element={<AboutPage/>}/>
-              <Route path="/detail/:id" element={<CartProvider><DetailProduct /></CartProvider>} /> 
+              <Route path="/detail/:id" element={<CartProvider><DetailProduct onAddComment={onAddComment} listComment={comments} /></CartProvider>} /> 
               <Route path="/myAccount/:id" element={<MyAccount onUpdateUser={onUpdatUser}/>}/>
             </Route>
 

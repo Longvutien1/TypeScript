@@ -103,7 +103,7 @@ const searchByName =  () => {
 ];
  dataSourd = products.map((item,index) => {
   return {
-      key: index+ 1,
+     
       id: item._id,
       name: item.name,
       img: item.img,
